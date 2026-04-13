@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Funeral Playlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --page-width: 402px;
+  --page-height: 874px;
+  --draft-scale: 1.8656716418;
+  --page-scale: 1.8656716418;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  background: #1e2231;
+}
+
+body {
+  width: var(--page-width);
+  height: var(--page-height);
+  margin: 0;
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+  background: #1e2231;
+  color: #fff;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--page-scale));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.title-area {
+  padding-top: 78px;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-shrink: 0;
+}
+
+.title-line {
+  margin-bottom: 22px;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+}
+
+.title-line .light {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.title-line .bold {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.subtitle {
+  font-size: 12px;
+  font-weight: 200;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.capsule-area {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 14px;
+  min-height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.capsule-area::-webkit-scrollbar {
+  display: none;
+}
+
+.capsule {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 140px;
+  height: 34px;
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 12px;
+  flex: 0 0 auto;
+}
+
+.capsule-text {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+
+.capsule-close {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.divider {
+  width: 382px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 auto 14px;
+  flex-shrink: 0;
+}
+
+.search-area {
+  padding: 0 20px;
+  margin-bottom: 27px;
+  flex-shrink: 0;
+}
+
+.search-bar {
+  width: 362px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+}
+
+.search-bar svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.5;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.search-bar input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+}
+
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.song-grid-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 20px 140px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.song-grid-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.song-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 106px);
+  gap: 14px 22px;
+  justify-content: center;
+}
+
+.song-item {
+  width: 106px;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cover {
+  width: 106px;
+  height: 106px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: #333;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.selected-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+}
+
+.song-item.selected .selected-overlay {
+  display: flex;
+}
+
+.check-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.song-name {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.05em;
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.song-artist {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 200;
+  line-height: 12px;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.confirm-area {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.confirm-btn {
+  width: 216px;
+  height: 62px;
+  border-radius: 31px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.confirm-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.confirm-btn:active {
+  transform: scale(0.985);
+}
+
+.confirm-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bottom-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(to top, #1e2231 40%, transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="title-area">
+    <div class="title-line">
+      <span class="light">How about your </span><span class="bold">Funeral Playlist?</span>
+    </div>
+    <div class="subtitle">*Choose tracks for your Funeral Playlist.</div>
+  </div>
+
+  <div class="capsule-area" id="capsule-area"></div>
+
+  <div class="divider"></div>
+
+  <div class="search-area">
+    <label class="search-bar" aria-label="Search songs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input id="search-input" type="text" placeholder="Search">
+    </label>
+  </div>
+
+  <div class="song-grid-wrapper">
+    <div class="song-grid" id="song-grid"></div>
+  </div>
+
+  <div class="bottom-gradient"></div>
+
+  <div class="confirm-area">
+    <button class="confirm-btn" id="confirm-btn" type="button">
+      <span>Confirm</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+function applyResponsiveScale() {
+  const sourceWidth = 402;
+  const sourceHeight = 874;
+  const draftWidth = 750;
+  const draftHeight = draftWidth * sourceHeight / sourceWidth;
+  const fit = Math.min(window.innerWidth / draftWidth, window.innerHeight / draftHeight);
+  document.documentElement.style.setProperty('--page-scale', String(fit * (draftWidth / sourceWidth)));
+}
+
+window.addEventListener('resize', applyResponsiveScale);
+window.addEventListener('orientationchange', applyResponsiveScale);
+applyResponsiveScale();
+
+const STORAGE_KEY = 'funeral-playlist-song-picks';
+const NEXT_PAGE_URL = './playlist-generate.html';
+const MAX_SONGS = 10;
+
+const songs = [
+  { id: 'song-13', name: 'See You Again', artist: 'Wiz Khalifa', image: '图片库/13.jpg' },
+  { id: 'song-14', name: 'Hurt', artist: 'Johnny Cash', image: '图片库/14.jpg' },
+  { id: 'song-15', name: 'Hallelujah', artist: 'Leonard Cohen', image: '图片库/15.jpg' },
+  { id: 'song-16', name: 'My Way', artist: 'Frank Sinatra', image: '图片库/16.jpg' },
+  { id: 'song-17', name: 'Tears in Heaven', artist: 'Eric Clapton', image: '图片库/17.jpg' },
+  { id: 'song-18', name: 'Fix You', artist: 'Coldplay', image: '图片库/18.jpg' },
+  { id: 'song-19', name: 'Bohemian Rhapsody', artist: 'Queen', image: '图片库/19.jpg' },
+  { id: 'song-20', name: 'Imagine', artist: 'John Lennon', image: '图片库/20.jpg' },
+  { id: 'song-21', name: "Knockin' On Heaven's Door", artist: 'Bob Dylan', image: '图片库/21.jpg' },
+  { id: 'song-22', name: 'Over the Rainbow', artist: 'Israel K.', image: '图片库/22.jpg' },
+  { id: 'song-23', name: 'Spirit In the Sky', artist: 'Norman Greenbaum', image: '图片库/23.jpg' },
+  { id: 'song-24', name: 'The Sound of Silence', artist: 'Simon & Garfunkel', image: '图片库/24.jpg' },
+  { id: 'song-25', name: 'Nothing Else Matters', artist: 'Metallica', image: '图片库/25.jpg' },
+  { id: 'song-26', name: 'Time to Say Goodbye', artist: 'Bocelli & Brightman', image: '图片库/26.jpg' },
+  { id: 'song-27', name: 'Yesterday', artist: 'The Beatles', image: '图片库/27.jpg' },
+  { id: 'song-28', name: 'Angels', artist: 'Robbie Williams', image: '图片库/28.jpg' },
+  { id: 'song-29', name: 'Bridge Over Troubled Water', artist: 'Simon & Garfunkel', image: '图片库/29.jpg' },
+  { id: 'song-30', name: 'Stairway to Heaven', artist: 'Led Zeppelin', image: '图片库/30.jpg' },
+  { id: 'song-31', name: 'Wish You Were Here', artist: 'Pink Floyd', image: '图片库/31.jpg' },
+  { id: 'song-32', name: 'Unforgettable', artist: 'Nat King Cole', image: '图片库/32.jpg' },
+  { id: 'song-33', name: 'Dancing in the Sky', artist: 'Dani and Lizzy', image: '图片库/33.jpg' },
+  { id: 'song-34', name: 'Supermarket Flowers', artist: 'Ed Sheeran', image: '图片库/34.jpg' },
+  { id: 'song-35', name: 'Go Rest High', artist: 'Vince Gill', image: '图片库/35.jpg' },
+  { id: 'song-36', name: 'Amazing Grace', artist: 'Judy Collins', image: '图片库/36.jpg' },
+  { id: 'song-37', name: 'Candle In the Wind', artist: 'Elton John', image: '图片库/37.jpg' },
+  { id: 'song-38', name: 'What a Wonderful World', artist: 'Louis Armstrong', image: '图片库/38.jpg' },
+  { id: 'song-39', name: 'I Will Always Love You', artist: 'Whitney Houston', image: '图片库/39.jpg' },
+  { id: 'song-40', name: 'Lean On Me', artist: 'Bill Withers', image: '图片库/40.jpg' },
+  { id: 'song-41', name: 'One More Light', artist: 'Linkin Park', image: '图片库/41.jpg' },
+  { id: 'song-42', name: 'Ave Maria', artist: 'Schubert', image: '图片库/42.jpg' }
+];
+
+const searchInput = document.getElementById('search-input');
+const songGrid = document.getElementById('song-grid');
+const capsuleArea = document.getElementById('capsule-area');
+const confirmBtn = document.getElementById('confirm-btn');
+
+let selectedSongIds = [];
+
+function loadSelections() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      selectedSongIds = [songs[0].id];
+      return;
+    }
+
+    const parsed = JSON.parse(raw);
+
+    if (Array.isArray(parsed.selectedSongIds)) {
+      selectedSongIds = parsed.selectedSongIds.filter((id) => songs.some((song) => song.id === id));
+    } else if (Array.isArray(parsed.selectedSongs)) {
+      selectedSongIds = parsed.selectedSongs
+        .map((savedSong) => songs.find((song) => song.name === savedSong.name && song.artist === savedSong.artist))
+        .filter(Boolean)
+        .map((song) => song.id);
+    }
+  } catch (error) {
+    selectedSongIds = [songs[0].id];
+  }
+}
+
+function saveSelections() {
+  const selectedSongs = selectedSongIds
+    .map((id) => songs.find((song) => song.id === id))
+    .filter(Boolean)
+    .map((song) => ({
+      id: song.id,
+      name: song.name,
+      artist: song.artist,
+      image: song.image
+    }));
+
+  const payload = {
+    selectedSongIds: [...selectedSongIds],
+    selectedSongs,
+    updatedAt: new Date().toISOString()
+  };
+
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+function getFilteredSongs() {
+  const keyword = searchInput.value.trim().toLowerCase();
+  if (!keyword) {
+    return songs;
+  }
+
+  return songs.filter((song) => {
+    return song.name.toLowerCase().includes(keyword) || song.artist.toLowerCase().includes(keyword);
+  });
+}
+
+function renderCapsules() {
+  capsuleArea.innerHTML = '';
+
+  selectedSongIds.forEach((id) => {
+    const song = songs.find((item) => item.id === id);
+    if (!song) {
+      return;
+    }
+
+    const capsule = document.createElement('div');
+    capsule.className = 'capsule';
+    capsule.innerHTML = `
+      <span class="capsule-text">${song.name}</span>
+      <button class="capsule-close" type="button" aria-label="Remove ${song.name}">&times;</button>
+    `;
+
+    capsule.querySelector('.capsule-close').addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleSong(song.id);
+    });
+
+    capsuleArea.appendChild(capsule);
+  });
+}
+
+function renderSongs() {
+  songGrid.innerHTML = '';
+
+  getFilteredSongs().forEach((song) => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'song-item' + (selectedSongIds.includes(song.id) ? ' selected' : '');
+    item.innerHTML = `
+      <div class="cover">
+        <img src="${song.image}" alt="${song.name}">
+        <div class="selected-overlay">
+          <div class="check-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#1e2231" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="song-name">${song.name}</div>
+      <div class="song-artist">${song.artist}</div>
+    `;
+    item.addEventListener('click', () => toggleSong(song.id));
+    songGrid.appendChild(item);
+  });
+}
+
+function toggleSong(songId) {
+  const existingIndex = selectedSongIds.indexOf(songId);
+
+  if (existingIndex >= 0) {
+    selectedSongIds.splice(existingIndex, 1);
+  } else {
+    if (selectedSongIds.length >= MAX_SONGS) {
+      return;
+    }
+    selectedSongIds.push(songId);
+  }
+
+  renderCapsules();
+  renderSongs();
+}
+
+searchInput.addEventListener('input', renderSongs);
+
+confirmBtn.addEventListener('click', () => {
+  saveSelections();
+  window.location.href = NEXT_PAGE_URL;
+});
+
+loadSelections();
+renderCapsules();
+renderSongs();
+</script>
+</body>
+</html>

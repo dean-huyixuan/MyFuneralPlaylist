@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Funeral Playlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;900&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --page-width: 402px;
+  --page-height: 874px;
+  --draft-scale: 1.8656716418;
+  --page-scale: 1.8656716418;
+  --card-large: 230px;
+  --card-small: 207px;
+  --card-gap: 20px;
+  --card-slot: 239px;
+  --text-primary: rgba(255, 255, 255, 0.96);
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --word-glow: #64D6FF;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  background: #060d15;
+}
+
+body {
+  width: var(--page-width);
+  height: var(--page-height);
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 50% 28%, rgba(39, 86, 139, 0.52) 0%, rgba(11, 24, 39, 0.08) 36%, transparent 64%),
+    radial-gradient(circle at 50% 76%, rgba(63, 103, 170, 0.16) 0%, transparent 44%),
+    linear-gradient(180deg, #0a1623 0%, #08111c 48%, #060d15 100%);
+  position: relative;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%) scale(var(--page-scale));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 74% 21%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 29% 56%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 68% 74%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 84% 88%, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.page {
+  position: relative;
+  width: var(--page-width);
+  height: var(--page-height);
+  overflow: hidden;
+  user-select: none;
+}
+
+.title-line1,
+.title-line2 {
+  position: absolute;
+  z-index: 2;
+  color: var(--text-primary);
+  letter-spacing: -0.05em;
+}
+
+.title-line1 {
+  top: 78px;
+  left: 20px;
+  right: 96px;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 30px;
+}
+
+.title-line2 {
+  top: 116px;
+  left: 20px;
+  right: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: right;
+}
+
+.carousel-area {
+  position: absolute;
+  top: 234px;
+  left: 0;
+  width: var(--page-width);
+  height: 230px;
+  overflow: visible;
+  touch-action: none;
+}
+
+.carousel-track {
+  position: absolute;
+  top: 0;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  cursor: grab;
+}
+
+.carousel-track.dragging {
+  cursor: grabbing;
+}
+
+.carousel-item {
+  flex: 0 0 var(--card-slot);
+  width: var(--card-slot);
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.74;
+  transition: opacity 0.28s ease;
+}
+
+.carousel-item.active {
+  opacity: 1;
+}
+
+.card-shell {
+  position: relative;
+  width: var(--card-small);
+  height: var(--card-small);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+  transition:
+    width 0.32s ease,
+    height 0.32s ease,
+    transform 0.32s ease,
+    box-shadow 0.32s ease,
+    opacity 0.32s ease;
+}
+
+.carousel-item.active .card-shell {
+  width: var(--card-large);
+  height: var(--card-large);
+  transform: translateZ(0);
+  box-shadow:
+    0 22px 42px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.card-image,
+.card-fallback {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.card-image {
+  object-fit: cover;
+}
+
+.card-fallback {
+  padding: 18px 16px;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.18), transparent 35%),
+    linear-gradient(135deg, rgba(17, 35, 57, 0.96), rgba(9, 17, 32, 0.98));
+  color: rgba(255, 255, 255, 0.94);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-option {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 24px;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.card-artist {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.lyrics-container {
+  position: absolute;
+  top: 502px;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+}
+
+.lyrics-text {
+  min-height: 60px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  opacity: 0;
+  transition: opacity 0.14s ease;
+}
+
+.lyrics-text.visible {
+  opacity: 1;
+}
+
+.lyrics-text.shrink {
+  font-size: 18px;
+}
+
+.glow-word {
+  color: var(--word-glow);
+  font-weight: 900;
+  text-shadow:
+    0 0 8px #64D6FF,
+    0 0 18px rgba(100, 214, 255, 0.4),
+    0 0 30px rgba(100, 214, 255, 0.2);
+}
+
+.song-info {
+  margin-top: 8px;
+  min-height: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-secondary);
+  opacity: 0;
+  transition: opacity 0.14s ease;
+}
+
+.song-info.visible {
+  opacity: 1;
+}
+
+.swipe-hint {
+  position: absolute;
+  top: 637px;
+  left: 50%;
+  width: 176px;
+  height: 62px;
+  transform: translateX(-50%);
+  opacity: 0.86;
+}
+
+.swipe-hint svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.swipe-path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.72);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-dasharray: 178;
+  stroke-dashoffset: 178;
+  animation: arc-grow 2.4s ease-in-out infinite;
+}
+
+@keyframes arc-grow {
+  0% {
+    stroke-dashoffset: 178;
+  }
+  60% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 178;
+  }
+}
+
+.swipe-text-path {
+  fill: none;
+  stroke: none;
+}
+
+.swipe-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  fill: rgba(255, 255, 255, 0.7);
+}
+
+.next-btn {
+  position: absolute;
+  top: 776px;
+  left: 50%;
+  width: 116px;
+  height: 34px;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.96);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 8px 18px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.next-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.next-btn:active {
+  transform: translateX(-50%) scale(0.985);
+}
+
+.next-btn:disabled {
+  cursor: default;
+  opacity: 0.82;
+}
+
+.status-note {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.34);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.status-note.visible {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="title-line1" id="title-line1"></div>
+  <div class="title-line2" id="title-line2"></div>
+
+  <div class="carousel-area" id="carousel-area">
+    <div class="carousel-track" id="track"></div>
+  </div>
+
+  <div class="lyrics-container">
+    <div class="lyrics-text" id="lyrics"></div>
+    <div class="song-info" id="info"></div>
+  </div>
+
+  <div class="swipe-hint">
+    <svg viewBox="0 0 176 62" aria-hidden="true">
+      <path class="swipe-path" d="M16 14 C48 40, 128 40, 160 14"></path>
+      <path class="swipe-text-path" id="swipe-text-path" d="M29 34 C60 52, 116 52, 147 34"></path>
+      <text class="swipe-label" dy="8">
+        <textPath href="#swipe-text-path" startOffset="50%" text-anchor="middle">Swipe to select</textPath>
+      </text>
+    </svg>
+  </div>
+
+  <button class="next-btn" id="next-btn" type="button">Next</button>
+  <div class="status-note" id="status-note">Selections saved locally on this device.</div>
+</div>
+
+<script>
+function applyResponsiveScale() {
+  const sourceWidth = 402;
+  const sourceHeight = 874;
+  const draftWidth = 750;
+  const draftHeight = draftWidth * sourceHeight / sourceWidth;
+  const fit = Math.min(window.innerWidth / draftWidth, window.innerHeight / draftHeight);
+  document.documentElement.style.setProperty('--page-scale', String(fit * (draftWidth / sourceWidth)));
+}
+
+function getPageScale() {
+  const value = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-scale'));
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
+
+function normalizePointerX(clientX) {
+  return clientX / getPageScale();
+}
+
+window.addEventListener('resize', applyResponsiveScale);
+window.addEventListener('orientationchange', applyResponsiveScale);
+applyResponsiveScale();
+
+const STORAGE_KEY = 'funeral-playlist-answers';
+const PLAYLIST_PAGE_URL = './song-picker.html';
+const SETS = 5;
+const PAGE_W = 402;
+const CENTER_X = PAGE_W / 2;
+const SLOT = 239;
+const TEXT_DELAY_MS = 80;
+const AUDIO_ROOT = 'question-audio';
+const questionAudioMap = [
+  [
+    `${AUDIO_ROOT}/问题1/问题1-1.mp3`,
+    `${AUDIO_ROOT}/问题1/问题1-2.mp3`,
+    `${AUDIO_ROOT}/问题1/问题1-3.mp3`,
+    `${AUDIO_ROOT}/问题1/问题1-4.mp3`,
+    `${AUDIO_ROOT}/问题1/问题1-5.mp3`
+  ],
+  [
+    `${AUDIO_ROOT}/问题2/问题2-1.mp3`,
+    `${AUDIO_ROOT}/问题2/问题2-2.mp3`,
+    `${AUDIO_ROOT}/问题2/问题2-3.mp3`,
+    `${AUDIO_ROOT}/问题2/问题2-4.mp3`,
+    `${AUDIO_ROOT}/问题2/问题2-5.mp3`
+  ],
+  [
+    `${AUDIO_ROOT}/问题3/问题3-1.mp3`,
+    `${AUDIO_ROOT}/问题3/3-2周杰倫藉口.mp3`
+  ],
+  [
+    `${AUDIO_ROOT}/问题4/4-1 kansas Dust in the Wind.mp3`,
+    `${AUDIO_ROOT}/问题4/4-2 coldplay A Sky Full of Stars.mp3`,
+    `${AUDIO_ROOT}/问题4/4-3 Joni Mitchell river.mp3`,
+    `${AUDIO_ROOT}/问题4/4-4 Hozier - Wildflower and Barley.mp3`,
+    `${AUDIO_ROOT}/问题4/4-5 skylar Grey - Coming Home.mp3`,
+    `${AUDIO_ROOT}/问题4/4-6 Blue October - Into The Ocean.mp3`
+  ],
+  [
+    `${AUDIO_ROOT}/问题5/5-1 Spice Girls - Mama.mp3`,
+    `${AUDIO_ROOT}/问题5/5-2 Taylor Swift - Lover.mp3`,
+    `${AUDIO_ROOT}/问题5/5-3 You've got a friend in me by Randy Newman.mp3`,
+    `${AUDIO_ROOT}/问题5/5-4 hello.mp3`
+  ]
+];
+
+const questions = [
+  {
+    titleLine1: 'What scene',
+    titleLine2: 'would you like at your funeral?',
+    options: [
+      {
+        image: '图片库/问题1-1.jpg',
+        title: 'Flowers - Miley Cyrus',
+        lyric: `"I can buy myself <span class="glow-word">flowers</span>...<br>Write my name in the sand."`
+      },
+      {
+        image: '图片库/问题1-2.png',
+        title: 'Summertime Sadness - Lana Del Rey',
+        lyric: `"Dancing in the dark, in<br>the pale <span class="glow-word">moonlight</span>."`
+      },
+      {
+        image: '图片库/问题1-3.jpg',
+        title: 'Cake By The Ocean - DNCE',
+        lyric: `"I keep on hoping we'll eat cake by the<br><span class="glow-word">ocean</span>, ah"`
+      },
+      {
+        image: '图片库/问题1-4.jpg',
+        title: 'Tik Tok - Kesha',
+        lyric: `"Don't stop, make it <span class="glow-word">pop</span>.<br>DJ, blow my speakers up."`
+      },
+      {
+        image: '图片库/问题1-5.jpg',
+        title: 'Fireflies - Owl City',
+        lyric: `"Ten thousand <span class="glow-word">lightning bugs</span><br>tried to teach me how to dance."`
+      }
+    ]
+  },
+  {
+    titleLine1: 'How do you want people',
+    titleLine2: 'to feel when leaving your funeral?',
+    options: [
+      {
+        image: '图片库/问题2-1.webp',
+        title: 'Let It Be - The Beatles',
+        lyric: `"There will be an answer,<br><span class="glow-word">let it be</span>."`
+      },
+      {
+        image: '图片库/问题2-2.jpg',
+        title: 'Ghost - Justin Bieber',
+        lyric: `"I <span class="glow-word">miss you</span><br>more than life."`
+      },
+      {
+        image: '图片库/问题2-3.webp',
+        title: 'Keep Driving - Harry Styles',
+        lyric: `"Should we just keep<br><span class="glow-word">driving</span>?"`
+      },
+      {
+        image: '图片库/问题2-4.jpg',
+        title: 'See You Again - Wiz Khalifa feat. Charlie Puth',
+        lyric: `"I'll <span class="glow-word">see you again</span>."`
+      },
+      {
+        image: '图片库/问题2-5.jpg',
+        title: 'Everything I Need - Skylar Grey',
+        lyric: `"You are <span class="glow-word">everything</span><br>to me."`
+      }
+    ]
+  },
+  {
+    titleLine1: 'After you die,',
+    titleLine2: 'you would like to be...',
+    options: [
+      {
+        image: '图片库/问题3-1.jpg',
+        title: 'Remember Me - Benjamin Bratt',
+        lyric: `"<span class="glow-word">Remember me</span>,<br>though I have to say goodbye."`
+      },
+      {
+        image: '图片库/问题3-2.jpg',
+        title: 'Excuse - Jay Chou',
+        lyric: `"If it hurts, please<br><span class="glow-word">forget</span> me."`
+      }
+    ]
+  },
+  {
+    titleLine1: 'Where would you like',
+    titleLine2: 'your soul to rest?',
+    options: [
+      {
+        image: '图片库/问题4-1.jpg',
+        title: 'Dust In The Wind - Kansas',
+        lyric: `"Dust in the <span class="glow-word">wind</span>."`
+      },
+      {
+        image: '图片库/问题4-2.jpg',
+        title: 'A Sky Full Of Stars - Coldplay',
+        lyric: `"Cause in a <span class="glow-word">sky</span><br>full of stars."`
+      },
+      {
+        image: '图片库/问题4-3.jpeg',
+        title: 'River - Joni Mitchell',
+        lyric: `"I wish I had a <span class="glow-word">river</span><br>I could skate away on."`
+      },
+      {
+        image: '图片库/问题4-4.png',
+        title: 'Wildflower And Barley - Hozier',
+        lyric: `"Springtime in the<br><span class="glow-word">country</span>."`
+      },
+      {
+        image: '图片库/问题4-5.jpg',
+        title: 'Coming Home - Skylar Grey',
+        lyric: `"I'm coming <span class="glow-word">home</span>,<br>I'm coming home."`
+      },
+      {
+        image: '图片库/问题4-6.jpg',
+        title: 'Into The Ocean - Blue October',
+        lyric: `"Relaxed, and floated into<br><span class="glow-word">space</span>."`
+      }
+    ]
+  },
+  {
+    titleLine1: 'Who would you most want',
+    titleLine2: 'at your funeral?',
+    options: [
+      {
+        image: '图片库/问题5-1.png',
+        title: 'Mama - Spice Girls',
+        lyric: `"<span class="glow-word">Mama</span>, I love you.<br>Mama, I care."`
+      },
+      {
+        image: '图片库/问题5-2.png',
+        title: 'Lover - Taylor Swift',
+        lyric: `"You're my my my my<br><span class="glow-word">lover</span>."`
+      },
+      {
+        image: '图片库/问题5-3.png',
+        title: "You've Got A Friend In Me - Randy Newman",
+        lyric: `"You've got a <span class="glow-word">friend</span><br>in me."`
+      },
+      {
+        image: '图片库/问题5-4.jpeg',
+        title: 'Hello - Adele',
+        lyric: `"Hello from <span class="glow-word">the other side</span>."`
+      }
+    ]
+  }
+];
+
+questions.forEach((question, questionIdx) => {
+  question.options.forEach((option, optionIdx) => {
+    option.audio = questionAudioMap[questionIdx]?.[optionIdx] || '';
+  });
+});
+
+const titleLine1El = document.getElementById('title-line1');
+const titleLine2El = document.getElementById('title-line2');
+const track = document.getElementById('track');
+const lyricsEl = document.getElementById('lyrics');
+const infoEl = document.getElementById('info');
+const nextBtn = document.getElementById('next-btn');
+const statusNote = document.getElementById('status-note');
+const optionAudio = new Audio();
+
+optionAudio.preload = 'auto';
+
+let questionIndex = 0;
+let activeQuestion = questions[0];
+let answers = new Array(questions.length).fill(null);
+let optionCount = activeQuestion.options.length;
+let totalItems = optionCount * SETS;
+let midStart = optionCount * 2;
+let currentIndex = midStart;
+let currentX = 0;
+let itemEls = [];
+let dragMoved = false;
+let pointerDown = false;
+let startX = 0;
+let startTx = 0;
+let dragStartIndex = 0;
+let prevX = 0;
+let prevTime = 0;
+let velocity = 0;
+let playlistReady = false;
+let currentAudioKey = '';
+let currentAudioSrc = '';
+
+function preloadImages() {
+  questions.forEach((question) => {
+    question.options.forEach((option) => {
+      if (!option.image) return;
+      const img = new Image();
+      img.src = option.image;
+    });
+  });
+}
+
+function preloadAudio() {
+  questions.forEach((question) => {
+    question.options.forEach((option) => {
+      if (!option.audio) return;
+      const audio = new Audio();
+      audio.preload = 'metadata';
+      audio.src = option.audio;
+    });
+  });
+}
+
+function clearPlaylistContinueState() {
+  if (questionIndex !== questions.length - 1 || !playlistReady) {
+    return;
+  }
+
+  playlistReady = false;
+  nextBtn.textContent = 'Done';
+  statusNote.classList.remove('visible');
+}
+
+function optionIndexFromCurrent() {
+  return ((currentIndex % optionCount) + optionCount) % optionCount;
+}
+
+function currentOption() {
+  return activeQuestion.options[optionIndexFromCurrent()];
+}
+
+function stopOptionAudio(resetState) {
+  optionAudio.pause();
+  try {
+    optionAudio.currentTime = 0;
+  } catch (error) {
+    // Ignore reset errors for unloaded audio.
+  }
+
+  if (resetState) {
+    currentAudioKey = '';
+    currentAudioSrc = '';
+  }
+}
+
+function playCurrentOptionAudio(force) {
+  const option = currentOption();
+  if (!option || !option.audio) {
+    stopOptionAudio(true);
+    return;
+  }
+
+  const optionIdx = optionIndexFromCurrent();
+  const nextAudioKey = `${questionIndex}-${optionIdx}`;
+  if (!force && currentAudioKey === nextAudioKey && !optionAudio.paused) {
+    return;
+  }
+
+  currentAudioKey = nextAudioKey;
+  if (currentAudioSrc !== option.audio) {
+    currentAudioSrc = option.audio;
+    optionAudio.src = option.audio;
+  }
+
+  try {
+    optionAudio.currentTime = 0;
+  } catch (error) {
+    // Ignore seek errors while the browser is loading the next clip.
+  }
+
+  const playPromise = optionAudio.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {
+      // Ignore autoplay blocks until the user interacts again.
+    });
+  }
+}
+
+function makeCard(option, optionIdx) {
+  const item = document.createElement('div');
+  item.className = 'carousel-item';
+  item.dataset.optionIndex = String(optionIdx);
+
+  const shell = document.createElement('div');
+  shell.className = 'card-shell';
+
+  if (option.image) {
+    const img = document.createElement('img');
+    img.className = 'card-image';
+    img.src = option.image;
+    img.alt = option.title;
+    img.draggable = false;
+    shell.appendChild(img);
+  } else {
+    const fallback = document.createElement('div');
+    fallback.className = 'card-fallback';
+    fallback.innerHTML = `
+      <div class="card-option">Option ${String.fromCharCode(65 + optionIdx)}</div>
+      <div class="card-title">${option.title.split(' - ')[0]}</div>
+      <div class="card-artist">${option.title.split(' - ')[1] || ''}</div>
+    `;
+    shell.appendChild(fallback);
+  }
+
+  item.appendChild(shell);
+  item.addEventListener('click', () => {
+    if (dragMoved) return;
+    clearPlaylistContinueState();
+    const listIndex = itemEls.indexOf(item);
+    if (listIndex >= 0) snapTo(listIndex, true);
+  });
+  return item;
+}
+
+function setTrackX(x, animated) {
+  track.style.transition = animated ? 'transform 0.32s ease-out' : 'none';
+  track.style.transform = `translateX(${x}px)`;
+  currentX = x;
+}
+
+function targetX(index) {
+  return CENTER_X - (index * SLOT + SLOT / 2);
+}
+
+function activate(index) {
+  itemEls.forEach((item, idx) => {
+    item.classList.toggle('active', idx === index);
+  });
+}
+
+function fitLyrics() {
+  lyricsEl.classList.remove('shrink');
+  if (lyricsEl.scrollHeight > 66) {
+    lyricsEl.classList.add('shrink');
+  }
+}
+
+function showText() {
+  const option = currentOption();
+  lyricsEl.innerHTML = option.lyric;
+  infoEl.textContent = option.title;
+  fitLyrics();
+  lyricsEl.classList.add('visible');
+  infoEl.classList.add('visible');
+}
+
+function hideText() {
+  lyricsEl.classList.remove('visible');
+  infoEl.classList.remove('visible');
+}
+
+function wrapTrack() {
+  if (currentIndex < optionCount) {
+    currentIndex += optionCount;
+    setTrackX(targetX(currentIndex), false);
+  } else if (currentIndex >= optionCount * (SETS - 1)) {
+    currentIndex -= optionCount;
+    setTrackX(targetX(currentIndex), false);
+  }
+  activate(currentIndex);
+}
+
+function snapTo(index, animated) {
+  currentIndex = index;
+  activate(index);
+  setTrackX(targetX(index), animated);
+  playCurrentOptionAudio(false);
+  if (animated) {
+    window.setTimeout(showText, TEXT_DELAY_MS);
+  } else {
+    showText();
+  }
+}
+
+function buildQuestion(index) {
+  questionIndex = index;
+  activeQuestion = questions[index];
+  optionCount = activeQuestion.options.length;
+  totalItems = optionCount * SETS;
+  midStart = optionCount * 2;
+  itemEls = [];
+
+  titleLine1El.textContent = activeQuestion.titleLine1;
+  titleLine2El.textContent = activeQuestion.titleLine2;
+
+  track.innerHTML = '';
+  activeQuestion.options.forEach((option, optionIdx) => {
+    for (let set = 0; set < SETS; set += 1) {
+      const card = makeCard(option, optionIdx);
+      track.appendChild(card);
+      itemEls.push(card);
+    }
+  });
+
+  const normalizedItems = [];
+  for (let set = 0; set < SETS; set += 1) {
+    for (let optionIdx = 0; optionIdx < optionCount; optionIdx += 1) {
+      const sourceIndex = optionIdx * SETS + set;
+      normalizedItems.push(itemEls[sourceIndex]);
+    }
+  }
+  track.innerHTML = '';
+  normalizedItems.forEach((item) => track.appendChild(item));
+  itemEls = normalizedItems;
+
+  hideText();
+  currentIndex = midStart + (answers[index] ?? 0);
+  setTrackX(targetX(currentIndex), false);
+  activate(currentIndex);
+  showText();
+  playCurrentOptionAudio(true);
+
+  nextBtn.textContent = index === questions.length - 1 ? 'Done' : 'Next';
+  nextBtn.disabled = false;
+  playlistReady = false;
+  statusNote.classList.remove('visible');
+}
+
+function startDrag(clientX) {
+  clearPlaylistContinueState();
+  pointerDown = true;
+  dragMoved = false;
+  startX = clientX;
+  startTx = currentX;
+  dragStartIndex = currentIndex;
+  prevX = clientX;
+  prevTime = Date.now();
+  velocity = 0;
+  track.classList.add('dragging');
+  track.style.transition = 'none';
+  hideText();
+}
+
+function moveDrag(clientX) {
+  if (!pointerDown) return;
+  const now = Date.now();
+  const dt = now - prevTime;
+  if (dt > 0) {
+    velocity = (clientX - prevX) / dt;
+  }
+  prevX = clientX;
+  prevTime = now;
+
+  const delta = clientX - startX;
+  if (Math.abs(delta) > 6) {
+    dragMoved = true;
+  }
+
+  const limitedDelta = Math.max(-SLOT, Math.min(SLOT, delta));
+  const nextX = startTx + limitedDelta;
+  track.style.transform = `translateX(${nextX}px)`;
+  currentX = nextX;
+
+  let candidate = dragStartIndex;
+  if (limitedDelta <= -SLOT / 2) {
+    candidate = dragStartIndex + 1;
+  } else if (limitedDelta >= SLOT / 2) {
+    candidate = dragStartIndex - 1;
+  }
+
+  const clamped = Math.max(0, Math.min(totalItems - 1, candidate));
+  if (clamped !== currentIndex) {
+    currentIndex = clamped;
+    activate(currentIndex);
+    playCurrentOptionAudio(false);
+  }
+}
+
+function endDrag() {
+  if (!pointerDown) return;
+  pointerDown = false;
+  track.classList.remove('dragging');
+
+  const delta = currentX - startTx;
+  const projectedDelta = delta + velocity * 72;
+  const swipeThreshold = SLOT * 0.24;
+  let step = 0;
+
+  if (projectedDelta <= -swipeThreshold) {
+    step = 1;
+  } else if (projectedDelta >= swipeThreshold) {
+    step = -1;
+  }
+
+  const targetIndex = Math.max(0, Math.min(totalItems - 1, dragStartIndex + step));
+  snapTo(targetIndex, true);
+  window.setTimeout(wrapTrack, 360);
+}
+
+function saveAnswers() {
+  const payload = {
+    answers: questions.map((question, idx) => {
+      const selectedIndex = answers[idx];
+      if (selectedIndex == null) {
+        return null;
+      }
+
+      const option = question.options[selectedIndex];
+      const keywordMatch = option.lyric.match(/glow-word">([^<]+)</);
+      return {
+        question: idx + 1,
+        titleLine1: question.titleLine1,
+        titleLine2: question.titleLine2,
+        selectedIndex,
+        selectedTitle: option.title,
+        selectedImage: option.image || null,
+        selectedKeyword: keywordMatch ? keywordMatch[1].trim() : ''
+      };
+    }),
+    updatedAt: new Date().toISOString()
+  };
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+nextBtn.addEventListener('click', () => {
+  if (questionIndex === questions.length - 1 && playlistReady) {
+    stopOptionAudio(true);
+    window.location.href = PLAYLIST_PAGE_URL;
+    return;
+  }
+
+  answers[questionIndex] = optionIndexFromCurrent();
+  saveAnswers();
+
+  if (questionIndex < questions.length - 1) {
+    buildQuestion(questionIndex + 1);
+    return;
+  }
+
+  nextBtn.textContent = 'Saved';
+  playlistReady = true;
+  nextBtn.disabled = false;
+  statusNote.textContent = 'Selections saved. Tap Saved again to continue.';
+  statusNote.classList.add('visible');
+});
+
+track.addEventListener('mousedown', (event) => {
+  event.preventDefault();
+  startDrag(normalizePointerX(event.clientX));
+});
+
+window.addEventListener('mousemove', (event) => {
+  moveDrag(normalizePointerX(event.clientX));
+});
+
+window.addEventListener('mouseup', endDrag);
+
+track.addEventListener('touchstart', (event) => {
+  startDrag(normalizePointerX(event.touches[0].clientX));
+}, { passive: true });
+
+window.addEventListener('touchmove', (event) => {
+  moveDrag(normalizePointerX(event.touches[0].clientX));
+}, { passive: true });
+
+window.addEventListener('touchend', endDrag);
+
+track.addEventListener('transitionend', wrapTrack);
+window.addEventListener('pagehide', () => stopOptionAudio(true));
+
+preloadImages();
+preloadAudio();
+buildQuestion(0);
+</script>
+</body>
+</html>

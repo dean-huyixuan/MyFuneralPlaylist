@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Generate Funeral Playlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;500;900&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --page-width: 402px;
+  --page-height: 874px;
+  --draft-scale: 1.8656716418;
+  --page-scale: 1.8656716418;
+  --text-primary: rgba(255, 255, 255, 0.96);
+  --text-secondary: rgba(255, 255, 255, 0.66);
+  --text-danger: #ffb7c0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  background: #060d15;
+}
+
+body {
+  width: var(--page-width);
+  height: var(--page-height);
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(38, 85, 139, 0.48) 0%, transparent 42%),
+    radial-gradient(circle at 50% 76%, rgba(63, 103, 170, 0.18) 0%, transparent 40%),
+    linear-gradient(180deg, #0a1625 0%, #08111c 48%, #060d15 100%);
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--page-scale));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 77% 26%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 24% 56%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 86% 84%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px);
+  opacity: 0.82;
+}
+
+.page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.page::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 270px;
+  height: 270px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(78, 121, 188, 0.18) 0%, rgba(78, 121, 188, 0.06) 34%, transparent 68%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.content {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-49%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  z-index: 1;
+}
+
+.question {
+  max-width: 320px;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+.generate-btn {
+  min-width: 148px;
+  height: 40px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.12));
+  color: rgba(255, 255, 255, 0.96);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 8px 16px rgba(255, 255, 255, 0.04),
+    0 12px 26px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.generate-btn:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.16));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 8px 16px rgba(255, 255, 255, 0.05),
+    0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+.generate-btn:active {
+  transform: scale(0.985);
+}
+
+.generate-btn.loading {
+  pointer-events: none;
+  min-width: 182px;
+}
+
+.loading-row {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.generate-btn.loading .loading-row {
+  display: inline-flex;
+}
+
+.generate-btn.loading .idle-label {
+  display: none;
+}
+
+.status-note {
+  min-height: 38px;
+  max-width: 308px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 19px;
+  letter-spacing: -0.03em;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.status-note.error {
+  color: var(--text-danger);
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  animation: pulse 1s infinite ease-in-out;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes pulse {
+  0%, 80%, 100% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="content">
+    <div class="question">What will your funeral be like?</div>
+    <button class="generate-btn" id="generate-btn" type="button">
+      <span class="idle-label">Generate</span>
+      <span class="loading-row" aria-hidden="true">
+        <span>Generating</span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </span>
+    </button>
+    <div class="status-note" id="status-note" aria-live="polite"></div>
+  </div>
+</div>
+
+<script>
+function applyResponsiveScale() {
+  const sourceWidth = 402;
+  const sourceHeight = 874;
+  const draftWidth = 750;
+  const draftHeight = draftWidth * sourceHeight / sourceWidth;
+  const fit = Math.min(window.innerWidth / draftWidth, window.innerHeight / draftHeight);
+  document.documentElement.style.setProperty('--page-scale', String(fit * (draftWidth / sourceWidth)));
+}
+
+window.addEventListener('resize', applyResponsiveScale);
+window.addEventListener('orientationchange', applyResponsiveScale);
+applyResponsiveScale();
+
+const generateBtn = document.getElementById('generate-btn');
+const statusNote = document.getElementById('status-note');
+const LOADING_PAGE_URL = './loading.html';
+
+function setStatus(message, isError) {
+  statusNote.textContent = message;
+  statusNote.classList.toggle('error', Boolean(isError));
+}
+
+async function handleGenerate() {
+  generateBtn.classList.add('loading');
+  setStatus('', false);
+  window.location.href = LOADING_PAGE_URL;
+}
+
+generateBtn.addEventListener('click', handleGenerate);
+</script>
+</body>
+</html>

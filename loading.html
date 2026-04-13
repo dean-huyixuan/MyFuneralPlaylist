@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Loading...</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --draft-scale: 1.8656716418;
+  --page-scale: 1.8656716418;
+  --text-primary: rgba(255, 255, 255, 0.96);
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-danger: #ffb7c0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  background: #060d15;
+}
+
+body {
+  width: 402px;
+  height: 874px;
+  margin: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 28%, rgba(18, 55, 90, 0.85) 0%, transparent 70%),
+    linear-gradient(180deg, #0b1a28 0%, #07101a 60%, #060e16 100%);
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--page-scale));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.scene-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene {
+  width: 402px;
+  height: 570px;
+  perspective: 620px;
+  perspective-origin: 50% 52%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.5);
+}
+
+.carousel {
+  transform-style: preserve-3d;
+  animation: spin 18s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spin {
+  from { transform: rotateX(-20deg) rotateY(0deg); }
+  to   { transform: rotateX(-20deg) rotateY(-360deg); }
+}
+
+.album {
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  top: -29.5px;
+  left: -29.5px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.album img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.loading-copy {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.loading-text {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  z-index: 10;
+}
+</style>
+</head>
+<body>
+
+<div class="scene-wrapper">
+  <div class="scene">
+    <div class="carousel" id="carousel"></div>
+  </div>
+  <div class="loading-copy">
+    <span class="loading-text" id="loading-text">loading...</span>
+  </div>
+</div>
+
+<script>
+function applyResponsiveScale() {
+  const sourceWidth = 402;
+  const sourceHeight = 874;
+  const draftWidth = 750;
+  const draftHeight = draftWidth * sourceHeight / sourceWidth;
+  const fit = Math.min(window.innerWidth / draftWidth, window.innerHeight / draftHeight);
+  document.documentElement.style.setProperty('--page-scale', String(fit * (draftWidth / sourceWidth)));
+}
+
+window.addEventListener('resize', applyResponsiveScale);
+window.addEventListener('orientationchange', applyResponsiveScale);
+applyResponsiveScale();
+
+const QUESTION_STORAGE_KEY = 'funeral-playlist-answers';
+const AI_SCENE_STORAGE_KEY = 'funeral-playlist-ai-scene';
+const SUMMARY_PAGE_URL = './playlist-summary.html';
+const GENERATE_API_URL = '/api/generate';
+const FIXED_PROMPT_PREFIX = 'Personalized funeral scenes, cinematic atmosphere, realistic style, dramatic lighting effects, and a meticulous and rigorous recreation of the scene elements given below (such as atmosphere, exhibits, weather, and people). The earlier descriptions are more important. Do not be bound by traditional funeral scenes. 1:1 aspect ratio and 2K resolution.';
+const PROMPT_FRAGMENTS = [
+  [
+    'sandy beach at low tide, flower petals scattered on wet sand, warm golden dusk light, soft waves washing the shore',
+    'pale moonlight casting silver blue light, dark night atmosphere, soft dancing shadows on the ground, deep indigo sky, cinematic night scene',
+    'bright oceanside setting, pastel colors, big fancy cake, sunlit waves, light and celebratory coastal atmosphere, white tablecloth fluttering in sea breeze',
+    'A vibrant and hot party atmosphere, DJ, disco balls, neon lights, people raising their hands and jumping.',
+    'Thousands of shimmering fireflies illuminate the dark forest, in the center of the scene, two people embrace, while others dance around them. Soft green and gold lights float in the air.'
+  ],
+  [
+    'serene and peaceful mood, soft white diffused light, gentle breeze through open windows, calm acceptance, muted warm tones',
+    'melancholic cool blue tones, empty chair with a single flower, lingering morning mist, bittersweet longing atmosphere, soft shadows',
+    'open winding road stretching to the horizon, warm headlights in soft dusk, sense of forward movement and continuation, open sky ahead',
+    'golden rays of light breaking through clouds, luminous pathway disappearing into warm light, hopeful and uplifting warm amber tones',
+    'warm golden intimate gathering, embracing silhouettes surrounded by soft candlelight, tender and loving atmosphere, close figures in gentle light'
+  ],
+  [
+    'softly glowing candles surrounding old photographs, warm memory-like atmosphere, gentle bokeh of flickering lights, nostalgic amber tones',
+    'A calm, silent atmosphere, gray-blue lighting, A peaceful sense of relief, a feeling of letting go, On the edge of a hazy, dreamlike state'
+  ],
+  [
+    'Dust particles under sunlight or lamplight fly in the wind',
+    'infinite starry night sky, milky way galaxy stretching overhead',
+    'The river was frozen over, and the water flowed slowly beneath the ice.',
+    'sprawling spring wildflower meadow, rolling countryside hills',
+    'warm amber light glowing from a cottage window, familiar winding path leading home',
+    'deep ocean merging seamlessly with outer space, stars visible through deep blue water, surreal dreamlike and vast'
+  ],
+  [
+    'The mother\'s figure appeared in the center of the picture.',
+    'An image of a lover holding a bouquet of roses and hiding behind their back appears in the center of the picture.',
+    'Several young men and women were drinking and chatting in prominent positions at the funeral.',
+    'A young man\'s digital avatar appeared in the center of the funeral.'
+  ]
+];
+
+const images = [
+  '图片库/13.jpg',
+  '图片库/14.jpg',
+  '图片库/15.jpg',
+  '图片库/16.jpg',
+  '图片库/17.jpg',
+  '图片库/18.jpg',
+  '图片库/19.jpg',
+  '图片库/20.jpg',
+  '图片库/21.jpg',
+  '图片库/22.jpg',
+  '图片库/23.jpg',
+  '图片库/24.jpg',
+  '图片库/25.jpg',
+  '图片库/26.jpg',
+  '图片库/27.jpg',
+  '图片库/28.jpg',
+  '图片库/29.jpg',
+  '图片库/30.jpg',
+  '图片库/31.jpg',
+  '图片库/32.jpg',
+  '图片库/33.jpg',
+  '图片库/34.jpg',
+  '图片库/35.jpg',
+  '图片库/36.jpg',
+  '图片库/37.jpg',
+  '图片库/38.jpg',
+  '图片库/39.jpg',
+  '图片库/40.jpg',
+  '图片库/41.jpg',
+  '图片库/42.jpg',
+  '图片库/问题1-1.jpg',
+  '图片库/问题1-2.png',
+  '图片库/问题1-3.jpg',
+  '图片库/问题1-4.jpg',
+  '图片库/问题1-5.jpg',
+  '图片库/问题2-1.webp',
+  '图片库/问题2-2.jpg',
+  '图片库/问题2-3.webp',
+  '图片库/问题2-4.jpg',
+  '图片库/问题2-5.jpg',
+  '图片库/问题3-1.jpg',
+  '图片库/问题3-2.jpg',
+  '图片库/问题4-1.jpg',
+  '图片库/问题4-2.jpg',
+  '图片库/问题4-3.png',
+  '图片库/问题4-4.png',
+  '图片库/问题4-5.jpg',
+  '图片库/问题4-6.jpg',
+  '图片库/问题5-1.png',
+  '图片库/问题5-2.png',
+  '图片库/问题5-3.png',
+  '图片库/问题5-4.jpg'
+];
+
+const carousel = document.getElementById('carousel');
+const loadingText = document.getElementById('loading-text');
+const N = images.length;
+const RADIUS = 240;
+let hasStartedGeneration = false;
+let loadingBaseText = 'loading';
+let loadingDotCount = 3;
+
+images.forEach((src, i) => {
+  const angleDeg = (i / N) * 360;
+
+  const pivot = document.createElement('div');
+  pivot.style.cssText = `
+    position: absolute;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    transform: rotateY(${angleDeg}deg) translateZ(${RADIUS}px);
+  `;
+
+  const el = document.createElement('div');
+  el.className = 'album';
+  el.style.transform = 'rotateY(90deg)';
+  el.innerHTML = `<img src="${src}" alt="">`;
+
+  pivot.appendChild(el);
+  carousel.appendChild(pivot);
+});
+
+function safeParse(key) {
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function renderLoadingText() {
+  loadingText.textContent = `${loadingBaseText}${'.'.repeat(loadingDotCount)}`;
+}
+
+function setLoadingState(mainText) {
+  loadingBaseText = mainText.replace(/\.+$/, '') || 'loading';
+  renderLoadingText();
+}
+
+function buildAnswerSignature(answers) {
+  return answers.map((answer) => {
+    if (!answer || typeof answer.selectedIndex !== 'number') {
+      return 'x';
+    }
+    return String(answer.selectedIndex);
+  }).join('-');
+}
+
+function buildPromptPayload() {
+  const saved = safeParse(QUESTION_STORAGE_KEY);
+  const answers = saved && Array.isArray(saved.answers) ? saved.answers : [];
+
+  if (!answers.length) {
+    throw new Error('Please finish the questionnaire before generating.');
+  }
+
+  const promptFragments = PROMPT_FRAGMENTS.map((fragments, questionIdx) => {
+    const answer = answers[questionIdx];
+    const selectedIndex = answer && typeof answer.selectedIndex === 'number' ? answer.selectedIndex : -1;
+    const fragment = fragments[selectedIndex];
+    if (!fragment) {
+      throw new Error('One or more question selections are missing. Please complete all five questions first.');
+    }
+    return fragment;
+  });
+
+  return {
+    prompt: [FIXED_PROMPT_PREFIX, ...promptFragments].join(', '),
+    promptFragments,
+    signature: buildAnswerSignature(answers)
+  };
+}
+
+function saveSceneState(payload) {
+  window.localStorage.setItem(AI_SCENE_STORAGE_KEY, JSON.stringify({
+    ...payload,
+    updatedAt: new Date().toISOString()
+  }));
+}
+
+async function requestGeneratedScene(prompt) {
+  const response = await fetch(GENERATE_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ prompt })
+  });
+
+  const payload = await response.json().catch(() => null);
+  if (!response.ok) {
+    const errorMessage = payload && (payload.error || payload.message);
+    throw new Error(errorMessage || `Generation failed with status ${response.status}.`);
+  }
+
+  const imageUrl = payload && payload.imageUrl;
+  if (!imageUrl) {
+    throw new Error('The AI service returned no image URL.');
+  }
+
+  return {
+    imageUrl,
+    timings: payload.timings || null,
+    seed: typeof payload.seed === 'number' ? payload.seed : null
+  };
+}
+
+async function runGeneration() {
+  if (hasStartedGeneration) {
+    return;
+  }
+
+  hasStartedGeneration = true;
+  setLoadingState('loading...');
+
+  try {
+    const promptPayload = buildPromptPayload();
+    saveSceneState({
+      status: 'loading',
+      prompt: promptPayload.prompt,
+      promptFragments: promptPayload.promptFragments,
+      signature: promptPayload.signature,
+      model: 'Qwen/Qwen-Image',
+      imageSize: '1328x1328'
+    });
+
+    const imageResult = await requestGeneratedScene(promptPayload.prompt);
+    saveSceneState({
+      status: 'ready',
+      prompt: promptPayload.prompt,
+      promptFragments: promptPayload.promptFragments,
+      signature: promptPayload.signature,
+      model: 'Qwen/Qwen-Image',
+      imageSize: '1328x1328',
+      imageUrl: imageResult.imageUrl,
+      timings: imageResult.timings,
+      seed: imageResult.seed
+    });
+
+    window.location.replace(SUMMARY_PAGE_URL);
+  } catch (error) {
+    const promptPayload = (() => {
+      try {
+        return buildPromptPayload();
+      } catch (innerError) {
+        return null;
+      }
+    })();
+
+    saveSceneState({
+      status: 'error',
+      prompt: promptPayload ? promptPayload.prompt : '',
+      promptFragments: promptPayload ? promptPayload.promptFragments : [],
+      signature: promptPayload ? promptPayload.signature : '',
+      model: 'Qwen/Qwen-Image',
+      imageSize: '1328x1328',
+      errorMessage: error instanceof Error ? error.message : 'Failed to generate the AI scene.'
+    });
+
+    setLoadingState('loading...');
+    hasStartedGeneration = false;
+  }
+}
+
+runGeneration();
+window.setInterval(() => {
+  loadingDotCount = (loadingDotCount % 3) + 1;
+  renderLoadingText();
+}, 420);
+</script>
+
+</body>
+</html>

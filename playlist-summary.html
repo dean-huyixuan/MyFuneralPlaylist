@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>My Funeral Playlist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;900&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --page-width: 402px;
+  --page-height: 874px;
+  --draft-scale: 1.8656716418;
+  --page-scale: 1.8656716418;
+  --text-primary: rgba(255, 255, 255, 0.98);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --line-color: rgba(255, 255, 255, 0.16);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  background: #060d15;
+}
+
+body {
+  width: var(--page-width);
+  height: var(--page-height);
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(38, 85, 139, 0.52) 0%, transparent 42%),
+    radial-gradient(circle at 50% 76%, rgba(63, 103, 170, 0.18) 0%, transparent 40%),
+    linear-gradient(180deg, #0a1625 0%, #08111c 48%, #060d15 100%);
+  position: relative;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%) scale(var(--page-scale));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 77% 26%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 24% 56%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 86% 84%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px);
+  opacity: 0.82;
+}
+
+.page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.poster-wrap {
+  position: absolute;
+  left: 20px;
+  top: 87px;
+  width: 362px;
+  height: 362px;
+  border-radius: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 20px 38px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.poster-display {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.poster-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.72);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.14), transparent 42%),
+    linear-gradient(135deg, rgba(17, 33, 55, 0.96), rgba(8, 15, 27, 0.98));
+}
+
+.poster-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.download-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.title {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 467px;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+
+.user-id {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 502px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+
+.keywords {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 527px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tracks-area {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 557px;
+  bottom: 114px;
+  padding: 0 20px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tracks-area::-webkit-scrollbar {
+  display: none;
+}
+
+.track-list {
+  width: 100%;
+}
+
+.track-row {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 19px;
+  min-height: 39px;
+  align-items: center;
+  border-top: 1px solid var(--line-color);
+}
+
+.track-row:first-child {
+  margin-top: 30px;
+}
+
+.track-number {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-secondary);
+}
+
+.track-name {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-artist {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  justify-self: end;
+  max-width: 128px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.save-share-area {
+  position: absolute;
+  right: 20px;
+  bottom: 36px;
+}
+
+.save-share-btn {
+  width: auto;
+  height: auto;
+  border: 0;
+  padding: 0;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+}
+
+.save-share-btn:hover {
+  filter: brightness(1.06);
+}
+
+.save-share-btn:active {
+  transform: scale(0.985);
+}
+
+.save-share-btn img {
+  width: auto;
+  height: 44px;
+  display: block;
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="poster-wrap">
+    <div class="poster-display" id="poster-display"></div>
+    <button class="download-btn" id="download-btn" type="button" aria-label="Download playlist summary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="title">My Funeral Playlist</div>
+  <div class="user-id" id="user-id"></div>
+  <div class="keywords" id="keywords"></div>
+
+  <div class="tracks-area">
+    <div class="track-list" id="track-list"></div>
+  </div>
+
+  <div class="save-share-area">
+    <button class="save-share-btn" id="save-share-btn" type="button" aria-label="Save and share playlist">
+      <img src="分享按钮.png" alt="">
+    </button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+function applyResponsiveScale() {
+  const sourceWidth = 402;
+  const sourceHeight = 874;
+  const draftWidth = 750;
+  const draftHeight = draftWidth * sourceHeight / sourceWidth;
+  const fit = Math.min(window.innerWidth / draftWidth, window.innerHeight / draftHeight);
+  document.documentElement.style.setProperty('--page-scale', String(fit * (draftWidth / sourceWidth)));
+}
+
+window.addEventListener('resize', applyResponsiveScale);
+window.addEventListener('orientationchange', applyResponsiveScale);
+applyResponsiveScale();
+
+const QUESTION_STORAGE_KEY = 'funeral-playlist-answers';
+const SONG_STORAGE_KEY = 'funeral-playlist-song-picks';
+const USER_ID_KEY = 'funeral-playlist-user-id';
+const AI_SCENE_STORAGE_KEY = 'funeral-playlist-ai-scene';
+
+const songCatalog = [
+  { id: 'song-1', name: 'Tides', artist: 'Ed Sheeran', image: '图片库/1.png' },
+  { id: 'song-2', name: 'A dream', artist: 'Adele', image: '图片库/2.png' },
+  { id: 'song-3', name: 'Aari Aari', artist: 'Dhizandhar', image: '图片库/3.png' },
+  { id: 'song-4', name: 'Sheeran', artist: 'Ed Sheeran', image: '图片库/4.png' },
+  { id: 'song-5', name: 'Folklore', artist: 'Taylor Swift', image: '图片库/5.png' },
+  { id: 'song-6', name: 'Red', artist: 'Taylor Swift', image: '图片库/6.png' },
+  { id: 'song-7', name: 'Mega Hit Mix', artist: 'Various', image: '图片库/7.png' },
+  { id: 'song-8', name: 'The life of a showgirl', artist: 'Kylie', image: '图片库/8.png' },
+  { id: 'song-9', name: 'Reputation', artist: 'Taylor Swift', image: '图片库/9.png' },
+  { id: 'song-10', name: 'Ignite', artist: 'Alan Walker', image: '图片库/10.png' },
+  { id: 'song-11', name: 'Starboy', artist: 'The Weeknd', image: '图片库/11.png' },
+  { id: 'song-12', name: 'Blinding Lights', artist: 'The Weeknd', image: '图片库/12.png' }
+];
+
+const posterDisplay = document.getElementById('poster-display');
+const userIdEl = document.getElementById('user-id');
+const keywordsEl = document.getElementById('keywords');
+const trackListEl = document.getElementById('track-list');
+const downloadBtn = document.getElementById('download-btn');
+const saveShareBtn = document.getElementById('save-share-btn');
+let activeSongIndex = 0;
+
+function safeParse(key) {
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function resolveSongs() {
+  const saved = safeParse(SONG_STORAGE_KEY);
+  if (saved && Array.isArray(saved.selectedSongs) && saved.selectedSongs.length) {
+    return saved.selectedSongs.map((song) => {
+      const matched = songCatalog.find((item) => item.id === song.id) || {};
+      return {
+        id: song.id,
+        name: song.name || matched.name || 'Track',
+        artist: song.artist || matched.artist || 'Singer',
+        image: song.image || matched.image || ''
+      };
+    });
+  }
+
+  if (saved && Array.isArray(saved.selectedSongIds) && saved.selectedSongIds.length) {
+    return saved.selectedSongIds.map((id) => songCatalog.find((song) => song.id === id)).filter(Boolean);
+  }
+
+  return [];
+}
+
+function resolveKeywords() {
+  const saved = safeParse(QUESTION_STORAGE_KEY);
+  if (!saved || !Array.isArray(saved.answers)) {
+    return [];
+  }
+
+  return saved.answers
+    .filter(Boolean)
+    .map((answer) => answer.selectedKeyword || answer.selectedTitle || '')
+    .map((text) => text.toString().trim())
+    .filter(Boolean)
+    .slice(0, 5);
+}
+
+function resolveAnswerSignature() {
+  const saved = safeParse(QUESTION_STORAGE_KEY);
+  if (!saved || !Array.isArray(saved.answers)) {
+    return '';
+  }
+
+  return saved.answers.map((answer) => {
+    if (!answer || typeof answer.selectedIndex !== 'number') {
+      return 'x';
+    }
+    return String(answer.selectedIndex);
+  }).join('-');
+}
+
+function resolveAiScene() {
+  const saved = safeParse(AI_SCENE_STORAGE_KEY);
+  if (!saved) {
+    return null;
+  }
+
+  const currentSignature = resolveAnswerSignature();
+  if (saved.signature && currentSignature && saved.signature !== currentSignature) {
+    return null;
+  }
+
+  return saved;
+}
+
+function buildUserId() {
+  const existing = window.localStorage.getItem(USER_ID_KEY);
+  if (existing) {
+    return existing;
+  }
+
+  const seed = Date.now().toString().slice(-6);
+  const id = `User #${seed}`;
+  window.localStorage.setItem(USER_ID_KEY, id);
+  return id;
+}
+
+function renderPoster(scene) {
+  posterDisplay.innerHTML = '';
+
+  if (!scene) {
+    posterDisplay.innerHTML = '<div class="poster-empty">Your AI funeral scene<br>will appear here.</div>';
+    return;
+  }
+
+  if (scene.status === 'loading') {
+    posterDisplay.innerHTML = '<div class="poster-empty">Generating your AI<br>funeral scene...</div>';
+    return;
+  }
+
+  if (scene.status === 'error') {
+    posterDisplay.innerHTML = '<div class="poster-empty">AI scene generation failed.<br>Please try again.</div>';
+    return;
+  }
+
+  if (scene.imageUrl) {
+    posterDisplay.innerHTML = `<img class="poster-image" src="${scene.imageUrl}" alt="Generated funeral scene">`;
+    return;
+  }
+
+  posterDisplay.innerHTML = '<div class="poster-empty">Your AI funeral scene<br>will appear here.</div>';
+}
+
+function renderTracks(songs) {
+  trackListEl.innerHTML = '';
+
+  if (!songs.length) {
+    trackListEl.innerHTML = `
+      <div class="track-row">
+        <div class="track-number">1</div>
+        <div class="track-name">No tracks selected yet</div>
+        <div class="track-artist">-</div>
+      </div>
+    `;
+    return;
+  }
+
+  songs.forEach((song, index) => {
+    const row = document.createElement('div');
+    row.className = 'track-row';
+    row.innerHTML = `
+      <div class="track-number">${index + 1}</div>
+      <div class="track-name">${song.name}</div>
+      <div class="track-artist">${song.artist}</div>
+    `;
+    trackListEl.appendChild(row);
+  });
+}
+
+function buildSummaryText(userId, keywords, songs) {
+  const keywordText = keywords.length ? keywords.join(' | ') : 'No keywords';
+  const lines = [
+    'My Funeral Playlist',
+    userId,
+    '',
+    `Keywords: ${keywordText}`,
+    '',
+    ...songs.map((song, index) => `${index + 1}. ${song.name} - ${song.artist}`)
+  ];
+  return lines.join('\r\n');
+}
+
+async function convertImagesToDataURL() {
+  const posterImg = document.querySelector('.poster-image');
+  if (!posterImg || !posterImg.src || posterImg.src.startsWith('data:')) return null;
+
+  const originalSrc = posterImg.src;
+  try {
+    const resp = await fetch(posterImg.src);
+    const blob = await resp.blob();
+    const dataUrl = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+    posterImg.src = dataUrl;
+    return { el: posterImg, originalSrc };
+  } catch (e) {
+    return null;
+  }
+}
+
+async function captureFullPage() {
+  // Convert cross-origin poster image to data URL first
+  const imgBackup = await convertImagesToDataURL();
+
+  const body = document.body;
+  const html = document.documentElement;
+  const page = document.querySelector('.page');
+  const tracksArea = document.querySelector('.tracks-area');
+  const saveShareArea = document.querySelector('.save-share-area');
+  const downloadBtnEl = document.getElementById('download-btn');
+
+  // Save original inline styles
+  const saved = {
+    htmlOverflow: html.style.overflow,
+    bodyPosition: body.style.position,
+    bodyTransform: body.style.transform,
+    bodyLeft: body.style.left,
+    bodyTop: body.style.top,
+    bodyWidth: body.style.width,
+    bodyHeight: body.style.height,
+    bodyOverflow: body.style.overflow,
+    pageHeight: page.style.height,
+    pageOverflow: page.style.overflow,
+    tracksBottom: tracksArea.style.bottom,
+    tracksOverflow: tracksArea.style.overflowY,
+    shareDisplay: saveShareArea.style.display,
+    downloadDisplay: downloadBtnEl.style.display,
+  };
+
+  // Temporarily flatten layout: remove scaling/centering, expand content
+  html.style.overflow = 'visible';
+  body.style.position = 'static';
+  body.style.transform = 'none';
+  body.style.left = '0';
+  body.style.top = '0';
+  body.style.overflow = 'visible';
+  page.style.height = 'auto';
+  page.style.overflow = 'visible';
+  tracksArea.style.bottom = 'auto';
+  tracksArea.style.overflowY = 'visible';
+  saveShareArea.style.display = 'none';
+  downloadBtnEl.style.display = 'none';
+
+  // Measure full height
+  const fullHeight = page.scrollHeight;
+  body.style.width = '402px';
+  body.style.height = fullHeight + 'px';
+
+  try {
+    const canvas = await html2canvas(body, {
+      width: 402,
+      height: fullHeight,
+      scale: 1,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#060d15',
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: 402,
+      windowHeight: fullHeight,
+    });
+    return canvas;
+  } finally {
+    // Restore everything
+    html.style.overflow = saved.htmlOverflow;
+    body.style.position = saved.bodyPosition;
+    body.style.transform = saved.bodyTransform;
+    body.style.left = saved.bodyLeft;
+    body.style.top = saved.bodyTop;
+    body.style.width = saved.bodyWidth;
+    body.style.height = saved.bodyHeight;
+    body.style.overflow = saved.bodyOverflow;
+    page.style.height = saved.pageHeight;
+    page.style.overflow = saved.pageOverflow;
+    tracksArea.style.bottom = saved.tracksBottom;
+    tracksArea.style.overflowY = saved.tracksOverflow;
+    saveShareArea.style.display = saved.shareDisplay;
+    downloadBtnEl.style.display = saved.downloadDisplay;
+    if (imgBackup) imgBackup.el.src = imgBackup.originalSrc;
+  }
+}
+
+async function downloadScreenshot() {
+  try {
+    const canvas = await captureFullPage();
+    const dataUrl = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = 'my-funeral-playlist.png';
+    link.click();
+  } catch (error) {
+    console.error('Screenshot failed:', error);
+  }
+}
+
+async function shareScreenshot() {
+  try {
+    const canvas = await captureFullPage();
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+
+    if (navigator.share && blob) {
+      const file = new File([blob], 'my-funeral-playlist.png', { type: 'image/png' });
+      try {
+        await navigator.share({
+          title: 'My Funeral Playlist',
+          files: [file]
+        });
+        return true;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Share failed:', error);
+    return false;
+  }
+}
+
+downloadBtn.addEventListener('click', downloadScreenshot);
+
+saveShareBtn.addEventListener('click', async () => {
+  const shared = await shareScreenshot();
+  if (!shared) {
+    await downloadScreenshot();
+  }
+});
+
+const songs = resolveSongs();
+const keywords = resolveKeywords();
+const scene = resolveAiScene();
+
+activeSongIndex = songs.length ? 0 : -1;
+renderPoster(scene);
+renderTracks(songs);
+userIdEl.textContent = buildUserId();
+keywordsEl.textContent = keywords.length ? keywords.join('  |  ') : 'keyword pending';
+</script>
+</body>
+</html>

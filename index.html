@@ -1,0 +1,3020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>#myfuneralplaylist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300;400;500;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   GLOBAL RESET & FRAMEWORK
+   ═══════════════════════════════════════════ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --page-width: 402px;
+  --page-height: 874px;
+  --draft-scale: 1.8656716418;
+  --page-scale: 1.8656716418;
+  --card-large: 230px;
+  --card-small: 207px;
+  --card-gap: 20px;
+  --card-slot: 239px;
+  --text-primary: rgba(255, 255, 255, 0.96);
+  --text-secondary: rgba(255, 255, 255, 0.5);
+  --word-glow: #64D6FF;
+  --line-color: rgba(255, 255, 255, 0.16);
+  --text-danger: #ffb7c0;
+}
+
+html, body {
+  width: 402px;
+  height: 874px;
+  overflow: hidden;
+}
+
+html {
+  background: #060d15;
+}
+
+body {
+  width: var(--page-width);
+  height: var(--page-height);
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background: #060d15;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--page-scale));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE TRANSITION FRAMEWORK
+   ═══════════════════════════════════════════ */
+.pages-wrapper {
+  width: 402px;
+  height: 874px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page {
+  width: 402px;
+  height: 874px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  will-change: transform;
+  user-select: none;
+}
+
+/* Cover slides horizontally */
+#page0 {
+  transform: translateX(0);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+#page0.exit-left {
+  transform: translateX(-100%);
+}
+
+/* All other pages slide vertically */
+.q-page {
+  transform: translateY(100%);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.q-page.active {
+  transform: translateY(0);
+}
+.q-page.exit-up {
+  transform: translateY(-100%);
+}
+
+/* Page1 special: enters from right when coming from cover */
+#page1.from-right {
+  transform: translateX(100%);
+}
+#page1.from-right.active {
+  transform: translateX(0);
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 0: COVER PAGE STYLES
+   ═══════════════════════════════════════════ */
+#page0 {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 28%, rgba(18, 55, 90, 0.85) 0%, transparent 70%),
+    linear-gradient(180deg, #0b1a28 0%, #07101a 60%, #060e16 100%);
+}
+
+#page0 .scene {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 402px;
+  height: 570px;
+  perspective: 620px;
+  perspective-origin: 50% 52%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#page0 .carousel-3d {
+  transform-style: preserve-3d;
+  animation: p0spin 18s linear infinite;
+  will-change: transform;
+}
+
+@keyframes p0spin {
+  from { transform: rotateX(-20deg) rotateY(0deg); }
+  to   { transform: rotateX(-20deg) rotateY(-360deg); }
+}
+
+#page0 .album {
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  top: -29.5px;
+  left: -29.5px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+#page0 .album img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#page0 .cover-title-main {
+  position: absolute;
+  top: 573px;
+  left: 20px;
+  right: 78px;
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 50px;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+}
+
+#page0 .cover-title-sub {
+  position: absolute;
+  bottom: 217px;
+  left: 20px;
+  right: 20px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+}
+
+#page0 .cover-next-btn {
+  position: absolute;
+  right: 20px;
+  bottom: 58px;
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 1: QUESTION SCENE STYLES
+   ═══════════════════════════════════════════ */
+#page1 {
+  background:
+    radial-gradient(circle at 50% 28%, rgba(39, 86, 139, 0.52) 0%, rgba(11, 24, 39, 0.08) 36%, transparent 64%),
+    radial-gradient(circle at 50% 76%, rgba(63, 103, 170, 0.16) 0%, transparent 44%),
+    linear-gradient(180deg, #0a1623 0%, #08111c 48%, #060d15 100%);
+}
+
+#page1::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 74% 21%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 29% 56%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 68% 74%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 84% 88%, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+#page1 .page-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--page-width);
+  height: var(--page-height);
+  overflow: hidden;
+  user-select: none;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#page1 .page-inner.q-exit-up {
+  transform: translateY(-100%);
+}
+#page1 .page-inner.q-exit-down {
+  transform: translateY(100%);
+}
+#page1 .page-inner.q-enter-from-below {
+  transform: translateY(100%);
+  transition: none;
+}
+#page1 .page-inner.q-enter-from-above {
+  transform: translateY(-100%);
+  transition: none;
+}
+#page1 .page-inner.q-snapshot {
+  pointer-events: none;
+}
+
+#page1 .title-line1,
+#page1 .title-line2 {
+  position: absolute;
+  z-index: 2;
+  color: var(--text-primary);
+  letter-spacing: -0.05em;
+}
+
+#page1 .title-line1 {
+  top: 78px;
+  left: 20px;
+  right: 96px;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 30px;
+}
+
+#page1 .title-line2 {
+  top: 116px;
+  left: 20px;
+  right: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: right;
+}
+
+#page1 .carousel-area {
+  position: absolute;
+  top: 234px;
+  left: 0;
+  width: var(--page-width);
+  height: 230px;
+  overflow: visible;
+  touch-action: none;
+}
+
+#page1 .carousel-track {
+  position: absolute;
+  top: 0;
+  height: 230px;
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  cursor: grab;
+}
+
+#page1 .carousel-track.dragging {
+  cursor: grabbing;
+}
+
+#page1 .carousel-item {
+  flex: 0 0 var(--card-slot);
+  width: var(--card-slot);
+  height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.74;
+  transition: opacity 0.28s ease;
+}
+
+#page1 .carousel-item.active {
+  opacity: 1;
+}
+
+#page1 .card-shell {
+  position: relative;
+  width: var(--card-small);
+  height: var(--card-small);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+  transition:
+    width 0.32s ease,
+    height 0.32s ease,
+    transform 0.32s ease,
+    box-shadow 0.32s ease,
+    opacity 0.32s ease;
+}
+
+#page1 .carousel-item.active .card-shell {
+  width: var(--card-large);
+  height: var(--card-large);
+  transform: translateZ(0);
+  box-shadow:
+    0 22px 42px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+#page1 .card-image,
+#page1 .card-fallback {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#page1 .card-image {
+  object-fit: cover;
+}
+
+#page1 .card-fallback {
+  padding: 18px 16px;
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.18), transparent 35%),
+    linear-gradient(135deg, rgba(17, 35, 57, 0.96), rgba(9, 17, 32, 0.98));
+  color: rgba(255, 255, 255, 0.94);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#page1 .card-option {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+#page1 .card-title {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 24px;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+#page1 .card-artist {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+#page1 .lyrics-container {
+  position: absolute;
+  top: 502px;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+}
+
+#page1 .lyrics-text {
+  min-height: 60px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  opacity: 0;
+  transition: opacity 0.14s ease;
+}
+
+#page1 .lyrics-text.visible {
+  opacity: 1;
+}
+
+#page1 .lyrics-text.shrink {
+  font-size: 18px;
+}
+
+#page1 .glow-word {
+  color: var(--word-glow);
+  font-weight: 900;
+  text-shadow:
+    0 0 8px #64D6FF,
+    0 0 18px rgba(100, 214, 255, 0.4),
+    0 0 30px rgba(100, 214, 255, 0.2);
+}
+
+#page1 .song-info {
+  margin-top: 8px;
+  min-height: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-secondary);
+  opacity: 0;
+  transition: opacity 0.14s ease;
+}
+
+#page1 .song-info.visible {
+  opacity: 1;
+}
+
+#page1 .swipe-hint {
+  position: absolute;
+  top: 637px;
+  left: 50%;
+  width: 176px;
+  height: 62px;
+  transform: translateX(-50%);
+  opacity: 0.86;
+}
+
+#page1 .swipe-hint svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+#page1 .swipe-path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.72);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-dasharray: 178;
+  stroke-dashoffset: 178;
+  animation: arc-grow 2.4s ease-in-out infinite;
+}
+
+@keyframes arc-grow {
+  0% {
+    stroke-dashoffset: 178;
+  }
+  60% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 178;
+  }
+}
+
+#page1 .swipe-text-path {
+  fill: none;
+  stroke: none;
+}
+
+#page1 .swipe-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  fill: rgba(255, 255, 255, 0.7);
+}
+
+#page1 .next-btn {
+  position: absolute;
+  top: 776px;
+  left: 50%;
+  width: 116px;
+  height: 34px;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.96);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 8px 18px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+#page1 .next-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+#page1 .next-btn:active {
+  transform: translateX(-50%) scale(0.985);
+}
+
+#page1 .next-btn:disabled {
+  cursor: default;
+  opacity: 0.82;
+}
+
+#page1 .status-note {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.34);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+#page1 .status-note.visible {
+  opacity: 1;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 2: SONG PICKER STYLES
+   ═══════════════════════════════════════════ */
+#page2 {
+  background: #1e2231;
+  color: #fff;
+}
+
+#page2 .container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+#page2 .title-area {
+  padding-top: 78px;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-shrink: 0;
+}
+
+#page2 .title-line {
+  margin-bottom: 22px;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+}
+
+#page2 .title-line .light {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+#page2 .title-line .bold {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+#page2 .subtitle {
+  font-size: 12px;
+  font-weight: 200;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+#page2 .capsule-area {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 14px;
+  min-height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#page2 .capsule-area::-webkit-scrollbar {
+  display: none;
+}
+
+#page2 .capsule {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 140px;
+  height: 34px;
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 12px;
+  flex: 0 0 auto;
+}
+
+#page2 .capsule-text {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100px;
+}
+
+#page2 .capsule-close {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  background: none;
+  color: rgba(255, 255, 255, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+#page2 .divider {
+  width: 382px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 auto 14px;
+  flex-shrink: 0;
+}
+
+#page2 .search-area {
+  padding: 0 20px;
+  margin-bottom: 27px;
+  flex-shrink: 0;
+}
+
+#page2 .search-bar {
+  width: 362px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+}
+
+#page2 .search-bar svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.5;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+#page2 .search-bar input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+}
+
+#page2 .search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+#page2 .song-grid-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 20px 140px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#page2 .song-grid-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+#page2 .song-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 106px);
+  gap: 14px 22px;
+  justify-content: center;
+}
+
+#page2 .song-item {
+  width: 106px;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+#page2 .cover {
+  width: 106px;
+  height: 106px;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  background: #333;
+}
+
+#page2 .cover img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+#page2 .selected-overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 6px;
+}
+
+#page2 .song-item.selected .selected-overlay {
+  display: flex;
+}
+
+#page2 .check-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page2 .check-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+#page2 .song-name {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: -0.05em;
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#page2 .song-artist {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 200;
+  line-height: 12px;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#page2 .confirm-area {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#page2 .confirm-btn {
+  width: 216px;
+  height: 62px;
+  border-radius: 31px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#page2 .confirm-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+#page2 .confirm-btn:active {
+  transform: scale(0.985);
+}
+
+#page2 .confirm-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+#page2 .bottom-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(to top, #1e2231 40%, transparent);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 3: GENERATE BUTTON STYLES
+   ═══════════════════════════════════════════ */
+#page3 {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(38, 85, 139, 0.48) 0%, transparent 42%),
+    radial-gradient(circle at 50% 76%, rgba(63, 103, 170, 0.18) 0%, transparent 40%),
+    linear-gradient(180deg, #0a1625 0%, #08111c 48%, #060d15 100%);
+}
+
+#page3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 77% 26%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 24% 56%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 86% 84%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px);
+  opacity: 0.82;
+}
+
+#page3 .page-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#page3 .page-inner::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 270px;
+  height: 270px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(78, 121, 188, 0.18) 0%, rgba(78, 121, 188, 0.06) 34%, transparent 68%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+#page3 .content {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-49%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  z-index: 1;
+}
+
+#page3 .question {
+  max-width: 320px;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+#page3 .generate-btn {
+  min-width: 148px;
+  height: 40px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.12));
+  color: rgba(255, 255, 255, 0.96);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 8px 16px rgba(255, 255, 255, 0.04),
+    0 12px 26px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#page3 .generate-btn:hover {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.16));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 8px 16px rgba(255, 255, 255, 0.05),
+    0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+#page3 .generate-btn:active {
+  transform: scale(0.985);
+}
+
+#page3 .generate-btn.loading {
+  pointer-events: none;
+  min-width: 182px;
+}
+
+#page3 .loading-row {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+#page3 .generate-btn.loading .loading-row {
+  display: inline-flex;
+}
+
+#page3 .generate-btn.loading .idle-label {
+  display: none;
+}
+
+#page3 .status-note {
+  min-height: 38px;
+  max-width: 308px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 19px;
+  letter-spacing: -0.03em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+#page3 .status-note.error {
+  color: var(--text-danger);
+}
+
+#page3 .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  animation: p3pulse 1s infinite ease-in-out;
+}
+
+#page3 .dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+#page3 .dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes p3pulse {
+  0%, 80%, 100% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 4: LOADING STYLES
+   ═══════════════════════════════════════════ */
+#page4 {
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 28%, rgba(18, 55, 90, 0.85) 0%, transparent 70%),
+    linear-gradient(180deg, #0b1a28 0%, #07101a 60%, #060e16 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page4 .scene-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page4 .scene {
+  width: 402px;
+  height: 570px;
+  perspective: 620px;
+  perspective-origin: 50% 52%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.5);
+}
+
+#page4 .carousel {
+  transform-style: preserve-3d;
+  animation: p4spin 18s linear infinite;
+  will-change: transform;
+}
+
+@keyframes p4spin {
+  from { transform: rotateX(-20deg) rotateY(0deg); }
+  to   { transform: rotateX(-20deg) rotateY(-360deg); }
+}
+
+#page4 .album {
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  top: -29.5px;
+  left: -29.5px;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+#page4 .album img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+#page4 .loading-copy {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+#page4 .loading-text {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  z-index: 10;
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 5: SUMMARY STYLES
+   ═══════════════════════════════════════════ */
+#page5 {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(38, 85, 139, 0.52) 0%, transparent 42%),
+    radial-gradient(circle at 50% 76%, rgba(63, 103, 170, 0.18) 0%, transparent 40%),
+    linear-gradient(180deg, #0a1625 0%, #08111c 48%, #060d15 100%);
+}
+
+#page5::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px),
+    radial-gradient(circle at 77% 26%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 24% 56%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 86% 84%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px);
+  opacity: 0.82;
+}
+
+#page5 .page-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#page5 .poster-wrap {
+  position: absolute;
+  left: 20px;
+  top: 87px;
+  width: 362px;
+  height: 362px;
+  border-radius: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 20px 38px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+#page5 .poster-display {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#page5 .poster-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.72);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.14), transparent 42%),
+    linear-gradient(135deg, rgba(17, 33, 55, 0.96), rgba(8, 15, 27, 0.98));
+}
+
+#page5 .poster-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+#page5 .download-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+#page5 .download-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+#page5 .title {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 467px;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+
+#page5 .user-id {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 502px;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+
+#page5 .keywords {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 527px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#page5 .tracks-area {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 557px;
+  bottom: 114px;
+  padding: 0 20px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#page5 .tracks-area::-webkit-scrollbar {
+  display: none;
+}
+
+#page5 .track-list {
+  width: 100%;
+}
+
+#page5 .track-row {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 19px;
+  min-height: 39px;
+  align-items: center;
+  border-top: 1px solid var(--line-color);
+}
+
+#page5 .track-row:first-child {
+  margin-top: 30px;
+}
+
+#page5 .track-number {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#page5 .track-name {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#page5 .track-artist {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 30px;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  justify-self: end;
+  max-width: 128px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#page5 .save-share-area {
+  position: absolute;
+  right: 20px;
+  bottom: 36px;
+}
+
+#page5 .save-share-btn {
+  width: auto;
+  height: auto;
+  border: 0;
+  padding: 0;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+}
+
+#page5 .save-share-btn:hover {
+  filter: brightness(1.06);
+}
+
+#page5 .save-share-btn:active {
+  transform: scale(0.985);
+}
+
+#page5 .save-share-btn img {
+  width: auto;
+  height: 44px;
+  display: block;
+}
+</style>
+</head>
+<body>
+<div class="pages-wrapper">
+
+  <!-- PAGE 0: COVER -->
+  <div class="page" id="page0">
+    <div class="scene">
+      <div class="carousel-3d" id="p0-carousel"></div>
+    </div>
+    <div class="cover-title-main">#myfuneralplaylist</div>
+    <div class="cover-title-sub">Rhythm as Expression</div>
+    <img class="cover-next-btn" id="p0-next-btn" src="首页按钮.png" alt="Next" draggable="false">
+  </div>
+
+  <!-- PAGE 1: QUESTIONS -->
+  <div class="page q-page from-right" id="page1">
+    <div class="page-inner">
+      <div class="title-line1" id="p1-title-line1"></div>
+      <div class="title-line2" id="p1-title-line2"></div>
+
+      <div class="carousel-area" id="p1-carousel-area">
+        <div class="carousel-track" id="p1-track"></div>
+      </div>
+
+      <div class="lyrics-container">
+        <div class="lyrics-text" id="p1-lyrics"></div>
+        <div class="song-info" id="p1-info"></div>
+      </div>
+
+      <div class="swipe-hint">
+        <svg viewBox="0 0 176 62" aria-hidden="true">
+          <path class="swipe-path" d="M16 14 C48 40, 128 40, 160 14"></path>
+          <path class="swipe-text-path" id="p1-swipe-text-path" d="M29 34 C60 52, 116 52, 147 34"></path>
+          <text class="swipe-label" dy="8">
+            <textPath href="#p1-swipe-text-path" startOffset="50%" text-anchor="middle">Swipe to select</textPath>
+          </text>
+        </svg>
+      </div>
+
+      <button class="next-btn" id="p1-next-btn" type="button">Next</button>
+      <div class="status-note" id="p1-status-note">Selections saved locally on this device.</div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: SONG PICKER -->
+  <div class="page q-page" id="page2">
+    <div class="container">
+      <div class="title-area">
+        <div class="title-line">
+          <span class="light">How about your </span><span class="bold">Funeral Playlist?</span>
+        </div>
+        <div class="subtitle">*Choose tracks for your Funeral Playlist.</div>
+      </div>
+
+      <div class="capsule-area" id="p2-capsule-area"></div>
+
+      <div class="divider"></div>
+
+      <div class="search-area">
+        <label class="search-bar" aria-label="Search songs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input id="p2-search-input" type="text" placeholder="Search">
+        </label>
+      </div>
+
+      <div class="song-grid-wrapper" id="p2-song-grid-wrapper">
+        <div class="song-grid" id="p2-song-grid"></div>
+      </div>
+
+      <div class="bottom-gradient"></div>
+
+      <div class="confirm-area">
+        <button class="confirm-btn" id="p2-confirm-btn" type="button">
+          <span>Confirm</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3: GENERATE -->
+  <div class="page q-page" id="page3">
+    <div class="page-inner">
+      <div class="content">
+        <div class="question">What will your funeral be like?</div>
+        <button class="generate-btn" id="p3-generate-btn" type="button">
+          <span class="idle-label">Generate</span>
+          <span class="loading-row" aria-hidden="true">
+            <span>Generating</span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </span>
+        </button>
+        <div class="status-note" id="p3-status-note" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 4: LOADING -->
+  <div class="page q-page" id="page4">
+    <div class="scene-wrapper">
+      <div class="scene">
+        <div class="carousel" id="p4-carousel"></div>
+      </div>
+      <div class="loading-copy">
+        <span class="loading-text" id="p4-loading-text">loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 5: SUMMARY -->
+  <div class="page q-page" id="page5">
+    <div class="page-inner">
+      <div class="poster-wrap">
+        <div class="poster-display" id="p5-poster-display"></div>
+        <button class="download-btn" id="p5-download-btn" type="button" aria-label="Download playlist summary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="title">My Funeral Playlist</div>
+      <div class="user-id" id="p5-user-id"></div>
+      <div class="keywords" id="p5-keywords"></div>
+
+      <div class="tracks-area" id="p5-tracks-area">
+        <div class="track-list" id="p5-track-list"></div>
+      </div>
+
+      <div class="save-share-area">
+        <button class="save-share-btn" id="p5-save-share-btn" type="button" aria-label="Save and share playlist">
+          <img src="分享按钮.png" alt="">
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════
+   SHARED: Responsive Scaling
+   ═══════════════════════════════════════════ */
+function applyResponsiveScale() {
+  var sourceWidth = 402;
+  var sourceHeight = 874;
+  var draftWidth = 750;
+  var draftHeight = draftWidth * sourceHeight / sourceWidth;
+  var fit = Math.min(window.innerWidth / draftWidth, window.innerHeight / draftHeight);
+  document.documentElement.style.setProperty('--page-scale', String(fit * (draftWidth / sourceWidth)));
+}
+
+function getPageScale() {
+  var value = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-scale'));
+  return Number.isFinite(value) && value > 0 ? value : 1;
+}
+
+function normalizePointerX(clientX) {
+  return clientX / getPageScale();
+}
+
+window.addEventListener('resize', applyResponsiveScale);
+window.addEventListener('orientationchange', applyResponsiveScale);
+applyResponsiveScale();
+
+/* ═══════════════════════════════════════════
+   SHARED: Cross-page communication hooks
+   ═══════════════════════════════════════════ */
+var page4StartLoading = null;
+var page5InitSummary = null;
+
+/* ═══════════════════════════════════════════
+   PAGE TRANSITION CONTROLLER
+   ═══════════════════════════════════════════ */
+var currentPage = 0;
+var transitioning = false;
+
+function goToPage(nextIdx) {
+  if (transitioning) return;
+  transitioning = true;
+
+  if (currentPage === 0 && nextIdx === 1) {
+    document.getElementById('page0').classList.add('exit-left');
+    document.getElementById('page1').classList.add('active');
+    setTimeout(function() {
+      document.getElementById('page1').classList.remove('from-right');
+      if (window.p1OnPageEnter) window.p1OnPageEnter();
+    }, 650);
+  } else {
+    var curPage = document.getElementById('page' + currentPage);
+    var nextPage = document.getElementById('page' + nextIdx);
+    curPage.classList.add('exit-up');
+    curPage.classList.remove('active');
+    nextPage.classList.add('active');
+  }
+
+  currentPage = nextIdx;
+  setTimeout(function() { transitioning = false; }, 600);
+}
+
+function goBack() {
+  if (transitioning || currentPage <= 1) return;
+  transitioning = true;
+  var prevIdx = currentPage - 1;
+  var curPage = document.getElementById('page' + currentPage);
+  var prevPage = document.getElementById('page' + prevIdx);
+  prevPage.classList.remove('exit-up');
+  prevPage.classList.add('active');
+  curPage.classList.remove('active');
+  currentPage = prevIdx;
+  setTimeout(function() { transitioning = false; }, 600);
+}
+
+function goBackToPage0() {
+  if (transitioning || currentPage !== 1) return;
+  transitioning = true;
+  document.getElementById('page1').classList.add('from-right');
+  document.getElementById('page1').classList.remove('active');
+  document.getElementById('page0').classList.remove('exit-left');
+  currentPage = 0;
+  setTimeout(function() { transitioning = false; }, 600);
+}
+
+/* Swipe detection */
+(function initSwipeBack() {
+  var startY = 0, startX = 0;
+  var isSwiping = false;
+  var wrapper = document.querySelector('.pages-wrapper');
+
+  wrapper.addEventListener('touchstart', function(e) {
+    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+    isSwiping = true;
+  }, { passive: true });
+
+  wrapper.addEventListener('touchend', function(e) {
+    if (!isSwiping) return;
+    isSwiping = false;
+    if (transitioning) return;
+
+    var deltaY = e.changedTouches[0].clientY - startY;
+    var deltaX = e.changedTouches[0].clientX - startX;
+
+    if (deltaY < 60 || Math.abs(deltaY) < Math.abs(deltaX) * 1.5) return;
+
+    if (currentPage === 2) {
+      var scrollEl = document.getElementById('p2-song-grid-wrapper');
+      if (scrollEl && scrollEl.scrollTop > 5) return;
+    }
+    if (currentPage === 5) {
+      var scrollEl5 = document.getElementById('p5-tracks-area');
+      if (scrollEl5 && scrollEl5.scrollTop > 5) return;
+    }
+
+    if (currentPage === 1) {
+      if (window.p1GetQuestionIndex && window.p1GetQuestionIndex() > 0) {
+        window.p1GoToPrevQuestion();
+      } else {
+        goBackToPage0();
+      }
+    } else if (currentPage > 1) {
+      goBack();
+    }
+  }, { passive: true });
+
+  var mouseDown = false;
+  wrapper.addEventListener('mousedown', function(e) {
+    startY = e.clientY;
+    startX = e.clientX;
+    mouseDown = true;
+  });
+
+  wrapper.addEventListener('mouseup', function(e) {
+    if (!mouseDown) return;
+    mouseDown = false;
+    if (transitioning) return;
+
+    var deltaY = e.clientY - startY;
+    var deltaX = e.clientX - startX;
+
+    if (deltaY < 60 || Math.abs(deltaY) < Math.abs(deltaX) * 1.5) return;
+
+    if (currentPage === 2) {
+      var scrollEl = document.getElementById('p2-song-grid-wrapper');
+      if (scrollEl && scrollEl.scrollTop > 5) return;
+    }
+    if (currentPage === 5) {
+      var scrollEl5 = document.getElementById('p5-tracks-area');
+      if (scrollEl5 && scrollEl5.scrollTop > 5) return;
+    }
+
+    if (currentPage === 1) {
+      if (window.p1GetQuestionIndex && window.p1GetQuestionIndex() > 0) {
+        window.p1GoToPrevQuestion();
+      } else {
+        goBackToPage0();
+      }
+    } else if (currentPage > 1) {
+      goBack();
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════
+   PAGE 0: COVER - 3D Album Carousel
+   ═══════════════════════════════════════════ */
+(function() {
+  var coverImages = [
+    '图片库/13.jpg', '图片库/14.jpg', '图片库/15.jpg', '图片库/16.jpg',
+    '图片库/17.jpg', '图片库/18.jpg', '图片库/19.jpg', '图片库/20.jpg',
+    '图片库/21.jpg', '图片库/22.jpg', '图片库/23.jpg', '图片库/24.jpg',
+    '图片库/25.jpg', '图片库/26.jpg', '图片库/27.jpg', '图片库/28.jpg',
+    '图片库/29.jpg', '图片库/30.jpg', '图片库/31.jpg', '图片库/32.jpg',
+    '图片库/33.jpg', '图片库/34.jpg', '图片库/35.jpg', '图片库/36.jpg',
+    '图片库/37.jpg', '图片库/38.jpg', '图片库/39.jpg', '图片库/40.jpg',
+    '图片库/41.jpg', '图片库/42.jpg',
+    '图片库/问题1-1.jpg', '图片库/问题1-2.png', '图片库/问题1-3.jpg',
+    '图片库/问题1-4.jpg', '图片库/问题1-5.jpg',
+    '图片库/问题2-1.webp', '图片库/问题2-2.jpg', '图片库/问题2-3.webp',
+    '图片库/问题2-4.jpg', '图片库/问题2-5.jpg',
+    '图片库/问题3-1.jpg', '图片库/问题3-2.jpg',
+    '图片库/问题4-1.jpg', '图片库/问题4-2.jpg', '图片库/问题4-3.jpeg',
+    '图片库/问题4-4.png', '图片库/问题4-5.jpg', '图片库/问题4-6.jpg',
+    '图片库/问题5-1.png', '图片库/问题5-2.png', '图片库/问题5-3.png', '图片库/问题5-4.jpeg'
+  ];
+
+  var N = coverImages.length;
+  var RADIUS = 240;
+  var carousel = document.getElementById('p0-carousel');
+
+  coverImages.forEach(function(src, i) {
+    var angleDeg = (i / N) * 360;
+    var pivot = document.createElement('div');
+    pivot.style.cssText =
+      'position:absolute;width:0;height:0;transform-style:preserve-3d;' +
+      'transform:rotateY(' + angleDeg + 'deg) translateZ(' + RADIUS + 'px);';
+    var el = document.createElement('div');
+    el.className = 'album';
+    el.style.transform = 'rotateY(90deg)';
+    el.innerHTML = '<img src="' + src + '" alt="">';
+    pivot.appendChild(el);
+    carousel.appendChild(pivot);
+  });
+
+  document.getElementById('p0-next-btn').addEventListener('click', function() {
+    goToPage(1);
+  });
+})();
+
+/* ═══════════════════════════════════════════
+   PAGE 1: QUESTION SCENE
+   ═══════════════════════════════════════════ */
+(function() {
+  var STORAGE_KEY = 'funeral-playlist-answers';
+  var SETS = 5;
+  var PAGE_W = 402;
+  var CENTER_X = PAGE_W / 2;
+  var SLOT = 239;
+  var TEXT_DELAY_MS = 80;
+  var AUDIO_ROOT = 'question-audio';
+  var questionAudioMap = [
+    [
+      AUDIO_ROOT + '/问题1/问题1-1.mp3',
+      AUDIO_ROOT + '/问题1/问题1-2.mp3',
+      AUDIO_ROOT + '/问题1/问题1-3.mp3',
+      AUDIO_ROOT + '/问题1/问题1-4.mp3',
+      AUDIO_ROOT + '/问题1/问题1-5.mp3'
+    ],
+    [
+      AUDIO_ROOT + '/问题2/问题2-1.mp3',
+      AUDIO_ROOT + '/问题2/问题2-2.mp3',
+      AUDIO_ROOT + '/问题2/问题2-3.mp3',
+      AUDIO_ROOT + '/问题2/问题2-4.mp3',
+      AUDIO_ROOT + '/问题2/问题2-5.mp3'
+    ],
+    [
+      AUDIO_ROOT + '/问题3/问题3-1.mp3',
+      AUDIO_ROOT + '/问题3/3-2周杰倫藉口.mp3'
+    ],
+    [
+      AUDIO_ROOT + '/问题4/4-1 kansas Dust in the Wind.mp3',
+      AUDIO_ROOT + '/问题4/4-2 coldplay A Sky Full of Stars.mp3',
+      AUDIO_ROOT + '/问题4/4-3 Joni Mitchell river.mp3',
+      AUDIO_ROOT + '/问题4/4-4 Hozier - Wildflower and Barley.mp3',
+      AUDIO_ROOT + '/问题4/4-5 skylar Grey - Coming Home.mp3',
+      AUDIO_ROOT + '/问题4/4-6 Blue October - Into The Ocean.mp3'
+    ],
+    [
+      AUDIO_ROOT + '/问题5/5-1 Spice Girls - Mama.mp3',
+      AUDIO_ROOT + '/问题5/5-2 Taylor Swift - Lover.mp3',
+      AUDIO_ROOT + '/问题5/5-3 You\'ve got a friend in me by Randy Newman.mp3',
+      AUDIO_ROOT + '/问题5/5-4 hello.mp3'
+    ]
+  ];
+
+  var questions = [
+    {
+      titleLine1: 'What scene',
+      titleLine2: 'would you like at your funeral?',
+      options: [
+        { image: '图片库/问题1-1.jpg', title: 'Flowers - Miley Cyrus', lyric: '"I can buy myself <span class="glow-word">flowers</span>...<br>Write my name in the sand."' },
+        { image: '图片库/问题1-2.png', title: 'Summertime Sadness - Lana Del Rey', lyric: '"Dancing in the dark, in<br>the pale <span class="glow-word">moonlight</span>."' },
+        { image: '图片库/问题1-3.jpg', title: 'Cake By The Ocean - DNCE', lyric: '"I keep on hoping we\'ll eat cake by the<br><span class="glow-word">ocean</span>, ah"' },
+        { image: '图片库/问题1-4.jpg', title: 'Tik Tok - Kesha', lyric: '"Don\'t stop, make it <span class="glow-word">pop</span>.<br>DJ, blow my speakers up."' },
+        { image: '图片库/问题1-5.jpg', title: 'Fireflies - Owl City', lyric: '"Ten thousand <span class="glow-word">lightning bugs</span><br>tried to teach me how to dance."' }
+      ]
+    },
+    {
+      titleLine1: 'How do you want people',
+      titleLine2: 'to feel when leaving your funeral?',
+      options: [
+        { image: '图片库/问题2-1.webp', title: 'Let It Be - The Beatles', lyric: '"There will be an answer,<br><span class="glow-word">let it be</span>."' },
+        { image: '图片库/问题2-2.jpg', title: 'Ghost - Justin Bieber', lyric: '"I <span class="glow-word">miss you</span><br>more than life."' },
+        { image: '图片库/问题2-3.webp', title: 'Keep Driving - Harry Styles', lyric: '"Should we just keep<br><span class="glow-word">driving</span>?"' },
+        { image: '图片库/问题2-4.jpg', title: 'See You Again - Wiz Khalifa feat. Charlie Puth', lyric: '"I\'ll <span class="glow-word">see you again</span>."' },
+        { image: '图片库/问题2-5.jpg', title: 'Everything I Need - Skylar Grey', lyric: '"You are <span class="glow-word">everything</span><br>to me."' }
+      ]
+    },
+    {
+      titleLine1: 'After you die,',
+      titleLine2: 'you would like to be...',
+      options: [
+        { image: '图片库/问题3-1.jpg', title: 'Remember Me - Benjamin Bratt', lyric: '"<span class="glow-word">Remember me</span>,<br>though I have to say goodbye."' },
+        { image: '图片库/问题3-2.jpg', title: 'Excuse - Jay Chou', lyric: '"If it hurts, please<br><span class="glow-word">forget</span> me."' }
+      ]
+    },
+    {
+      titleLine1: 'Where would you like',
+      titleLine2: 'your soul to rest?',
+      options: [
+        { image: '图片库/问题4-1.jpg', title: 'Dust In The Wind - Kansas', lyric: '"Dust in the <span class="glow-word">wind</span>."' },
+        { image: '图片库/问题4-2.jpg', title: 'A Sky Full Of Stars - Coldplay', lyric: '"Cause in a <span class="glow-word">sky</span><br>full of stars."' },
+        { image: '图片库/问题4-3.jpeg', title: 'River - Joni Mitchell', lyric: '"I wish I had a <span class="glow-word">river</span><br>I could skate away on."' },
+        { image: '图片库/问题4-4.png', title: 'Wildflower And Barley - Hozier', lyric: '"Springtime in the<br><span class="glow-word">country</span>."' },
+        { image: '图片库/问题4-5.jpg', title: 'Coming Home - Skylar Grey', lyric: '"I\'m coming <span class="glow-word">home</span>,<br>I\'m coming home."' },
+        { image: '图片库/问题4-6.jpg', title: 'Into The Ocean - Blue October', lyric: '"Relaxed, and floated into<br><span class="glow-word">space</span>."' }
+      ]
+    },
+    {
+      titleLine1: 'Who would you most want',
+      titleLine2: 'at your funeral?',
+      options: [
+        { image: '图片库/问题5-1.png', title: 'Mama - Spice Girls', lyric: '"<span class="glow-word">Mama</span>, I love you.<br>Mama, I care."' },
+        { image: '图片库/问题5-2.png', title: 'Lover - Taylor Swift', lyric: '"You\'re my my my my<br><span class="glow-word">lover</span>."' },
+        { image: '图片库/问题5-3.png', title: "You've Got A Friend In Me - Randy Newman", lyric: '"You\'ve got a <span class="glow-word">friend</span><br>in me."' },
+        { image: '图片库/问题5-4.jpeg', title: 'Hello - Adele', lyric: '"Hello from <span class="glow-word">the other side</span>."' }
+      ]
+    }
+  ];
+
+  questions.forEach(function(question, questionIdx) {
+    question.options.forEach(function(option, optionIdx) {
+      option.audio = questionAudioMap[questionIdx] ? (questionAudioMap[questionIdx][optionIdx] || '') : '';
+    });
+  });
+
+  var titleLine1El = document.getElementById('p1-title-line1');
+  var titleLine2El = document.getElementById('p1-title-line2');
+  var track = document.getElementById('p1-track');
+  var lyricsEl = document.getElementById('p1-lyrics');
+  var infoEl = document.getElementById('p1-info');
+  var nextBtn = document.getElementById('p1-next-btn');
+  var statusNote = document.getElementById('p1-status-note');
+  var optionAudio = new Audio();
+
+  optionAudio.preload = 'auto';
+
+  var questionIndex = 0;
+  var activeQuestion = questions[0];
+  var answers = new Array(questions.length).fill(null);
+  var optionCount = activeQuestion.options.length;
+  var totalItems = optionCount * SETS;
+  var page1Active = false;
+  var qTransitioning = false;
+  var midStart = optionCount * 2;
+  var currentIndex = midStart;
+  var currentX = 0;
+  var itemEls = [];
+  var dragMoved = false;
+  var pointerDown = false;
+  var startX = 0;
+  var startTx = 0;
+  var dragStartIndex = 0;
+  var prevX = 0;
+  var prevTime = 0;
+  var velocity = 0;
+  var playlistReady = false;
+  var currentAudioKey = '';
+  var currentAudioSrc = '';
+
+  function preloadImages() {
+    questions.forEach(function(question) {
+      question.options.forEach(function(option) {
+        if (!option.image) return;
+        var img = new Image();
+        img.src = option.image;
+      });
+    });
+  }
+
+  function preloadAudio() {
+    questions.forEach(function(question) {
+      question.options.forEach(function(option) {
+        if (!option.audio) return;
+        var audio = new Audio();
+        audio.preload = 'metadata';
+        audio.src = option.audio;
+      });
+    });
+  }
+
+  function clearPlaylistContinueState() {
+    if (questionIndex !== questions.length - 1 || !playlistReady) return;
+    playlistReady = false;
+    nextBtn.textContent = 'Done';
+    statusNote.classList.remove('visible');
+  }
+
+  function optionIndexFromCurrent() {
+    return ((currentIndex % optionCount) + optionCount) % optionCount;
+  }
+
+  function currentOption() {
+    return activeQuestion.options[optionIndexFromCurrent()];
+  }
+
+  function stopOptionAudio(resetState) {
+    optionAudio.pause();
+    try { optionAudio.currentTime = 0; } catch (error) {}
+    if (resetState) { currentAudioKey = ''; currentAudioSrc = ''; }
+  }
+
+  function playCurrentOptionAudio(force) {
+    var option = currentOption();
+    if (!option || !option.audio) { stopOptionAudio(true); return; }
+
+    var optionIdx = optionIndexFromCurrent();
+    var nextAudioKey = questionIndex + '-' + optionIdx;
+    if (!force && currentAudioKey === nextAudioKey && !optionAudio.paused) return;
+
+    currentAudioKey = nextAudioKey;
+    if (currentAudioSrc !== option.audio) {
+      currentAudioSrc = option.audio;
+      optionAudio.src = option.audio;
+    }
+
+    try { optionAudio.currentTime = 0; } catch (error) {}
+
+    var playPromise = optionAudio.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(function() {});
+    }
+  }
+
+  function makeCard(option, optionIdx) {
+    var item = document.createElement('div');
+    item.className = 'carousel-item';
+    item.dataset.optionIndex = String(optionIdx);
+
+    var shell = document.createElement('div');
+    shell.className = 'card-shell';
+
+    if (option.image) {
+      var img = document.createElement('img');
+      img.className = 'card-image';
+      img.src = option.image;
+      img.alt = option.title;
+      img.draggable = false;
+      shell.appendChild(img);
+    } else {
+      var fallback = document.createElement('div');
+      fallback.className = 'card-fallback';
+      fallback.innerHTML =
+        '<div class="card-option">Option ' + String.fromCharCode(65 + optionIdx) + '</div>' +
+        '<div class="card-title">' + option.title.split(' - ')[0] + '</div>' +
+        '<div class="card-artist">' + (option.title.split(' - ')[1] || '') + '</div>';
+      shell.appendChild(fallback);
+    }
+
+    item.appendChild(shell);
+    item.addEventListener('click', function() {
+      if (dragMoved) return;
+      clearPlaylistContinueState();
+      var listIndex = itemEls.indexOf(item);
+      if (listIndex >= 0) snapTo(listIndex, true);
+    });
+    return item;
+  }
+
+  function setTrackX(x, animated) {
+    track.style.transition = animated ? 'transform 0.32s ease-out' : 'none';
+    track.style.transform = 'translateX(' + x + 'px)';
+    currentX = x;
+  }
+
+  function targetX(index) {
+    return CENTER_X - (index * SLOT + SLOT / 2);
+  }
+
+  function activate(index) {
+    itemEls.forEach(function(item, idx) {
+      if (idx === index) item.classList.add('active');
+      else item.classList.remove('active');
+    });
+  }
+
+  function fitLyrics() {
+    lyricsEl.classList.remove('shrink');
+    if (lyricsEl.scrollHeight > 66) lyricsEl.classList.add('shrink');
+  }
+
+  function showText() {
+    var option = currentOption();
+    lyricsEl.innerHTML = option.lyric;
+    infoEl.textContent = option.title;
+    fitLyrics();
+    lyricsEl.classList.add('visible');
+    infoEl.classList.add('visible');
+  }
+
+  function hideText() {
+    lyricsEl.classList.remove('visible');
+    infoEl.classList.remove('visible');
+  }
+
+  function wrapTrack() {
+    if (currentIndex < optionCount) {
+      currentIndex += optionCount;
+      setTrackX(targetX(currentIndex), false);
+    } else if (currentIndex >= optionCount * (SETS - 1)) {
+      currentIndex -= optionCount;
+      setTrackX(targetX(currentIndex), false);
+    }
+    activate(currentIndex);
+  }
+
+  function snapTo(index, animated) {
+    currentIndex = index;
+    activate(index);
+    setTrackX(targetX(index), animated);
+    playCurrentOptionAudio(false);
+    if (animated) {
+      window.setTimeout(showText, TEXT_DELAY_MS);
+    } else {
+      showText();
+    }
+  }
+
+  function buildQuestion(index) {
+    questionIndex = index;
+    activeQuestion = questions[index];
+    optionCount = activeQuestion.options.length;
+    totalItems = optionCount * SETS;
+    midStart = optionCount * 2;
+    itemEls = [];
+
+    titleLine1El.textContent = activeQuestion.titleLine1;
+    titleLine2El.textContent = activeQuestion.titleLine2;
+
+    track.innerHTML = '';
+    activeQuestion.options.forEach(function(option, optionIdx) {
+      for (var set = 0; set < SETS; set += 1) {
+        var card = makeCard(option, optionIdx);
+        track.appendChild(card);
+        itemEls.push(card);
+      }
+    });
+
+    var normalizedItems = [];
+    for (var set = 0; set < SETS; set += 1) {
+      for (var optionIdx = 0; optionIdx < optionCount; optionIdx += 1) {
+        var sourceIndex = optionIdx * SETS + set;
+        normalizedItems.push(itemEls[sourceIndex]);
+      }
+    }
+    track.innerHTML = '';
+    normalizedItems.forEach(function(item) { track.appendChild(item); });
+    itemEls = normalizedItems;
+
+    hideText();
+    currentIndex = midStart + (answers[index] != null ? answers[index] : 0);
+    setTrackX(targetX(currentIndex), false);
+    activate(currentIndex);
+    showText();
+    if (page1Active) playCurrentOptionAudio(true);
+
+    nextBtn.textContent = index === questions.length - 1 ? 'Done' : 'Next';
+    nextBtn.disabled = false;
+    playlistReady = false;
+    statusNote.classList.remove('visible');
+  }
+
+  function transitionToQuestion(newIndex, direction) {
+    if (qTransitioning) return;
+    qTransitioning = true;
+    stopOptionAudio(true);
+
+    var inner = document.querySelector('#page1 .page-inner');
+    var page1El = document.getElementById('page1');
+
+    /* 1. Clone current content as a snapshot */
+    var snapshot = inner.cloneNode(true);
+    snapshot.classList.add('q-snapshot');
+    page1El.appendChild(snapshot);
+
+    /* 2. Position real inner offscreen (no transition) */
+    var enterClass = direction === 'forward' ? 'q-enter-from-below' : 'q-enter-from-above';
+    inner.classList.add(enterClass);
+
+    /* 3. Swap content while offscreen */
+    buildQuestion(newIndex);
+
+    /* 4. Force reflow, then animate both simultaneously */
+    inner.offsetHeight;
+    inner.classList.remove(enterClass);
+
+    var exitClass = direction === 'forward' ? 'q-exit-up' : 'q-exit-down';
+    snapshot.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    snapshot.classList.add(exitClass);
+
+    /* 5. Cleanup after animation */
+    setTimeout(function() {
+      snapshot.remove();
+      qTransitioning = false;
+    }, 620);
+  }
+
+  function startDrag(clientX) {
+    clearPlaylistContinueState();
+    pointerDown = true;
+    dragMoved = false;
+    startX = clientX;
+    startTx = currentX;
+    dragStartIndex = currentIndex;
+    prevX = clientX;
+    prevTime = Date.now();
+    velocity = 0;
+    track.classList.add('dragging');
+    track.style.transition = 'none';
+    hideText();
+  }
+
+  function moveDrag(clientX) {
+    if (!pointerDown) return;
+    var now = Date.now();
+    var dt = now - prevTime;
+    if (dt > 0) velocity = (clientX - prevX) / dt;
+    prevX = clientX;
+    prevTime = now;
+
+    var delta = clientX - startX;
+    if (Math.abs(delta) > 6) dragMoved = true;
+
+    var limitedDelta = Math.max(-SLOT, Math.min(SLOT, delta));
+    var nextX = startTx + limitedDelta;
+    track.style.transform = 'translateX(' + nextX + 'px)';
+    currentX = nextX;
+
+    var candidate = dragStartIndex;
+    if (limitedDelta <= -SLOT / 2) candidate = dragStartIndex + 1;
+    else if (limitedDelta >= SLOT / 2) candidate = dragStartIndex - 1;
+
+    var clamped = Math.max(0, Math.min(totalItems - 1, candidate));
+    if (clamped !== currentIndex) {
+      currentIndex = clamped;
+      activate(currentIndex);
+      playCurrentOptionAudio(false);
+    }
+  }
+
+  function endDrag() {
+    if (!pointerDown) return;
+    pointerDown = false;
+    track.classList.remove('dragging');
+
+    var delta = currentX - startTx;
+    var projectedDelta = delta + velocity * 72;
+    var swipeThreshold = SLOT * 0.24;
+    var step = 0;
+
+    if (projectedDelta <= -swipeThreshold) step = 1;
+    else if (projectedDelta >= swipeThreshold) step = -1;
+
+    var targetIndex = Math.max(0, Math.min(totalItems - 1, dragStartIndex + step));
+    snapTo(targetIndex, true);
+    window.setTimeout(wrapTrack, 360);
+  }
+
+  function saveAnswers() {
+    var payload = {
+      answers: questions.map(function(question, idx) {
+        var selectedIndex = answers[idx];
+        if (selectedIndex == null) return null;
+
+        var option = question.options[selectedIndex];
+        var keywordMatch = option.lyric.match(/glow-word">([^<]+)/);
+        return {
+          question: idx + 1,
+          titleLine1: question.titleLine1,
+          titleLine2: question.titleLine2,
+          selectedIndex: selectedIndex,
+          selectedTitle: option.title,
+          selectedImage: option.image || null,
+          selectedKeyword: keywordMatch ? keywordMatch[1].trim() : ''
+        };
+      }),
+      updatedAt: new Date().toISOString()
+    };
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  }
+
+  nextBtn.addEventListener('click', function() {
+    if (questionIndex === questions.length - 1 && playlistReady) {
+      stopOptionAudio(true);
+      goToPage(2);
+      return;
+    }
+
+    answers[questionIndex] = optionIndexFromCurrent();
+    saveAnswers();
+
+    if (questionIndex < questions.length - 1) {
+      transitionToQuestion(questionIndex + 1, 'forward');
+      return;
+    }
+
+    nextBtn.textContent = 'Saved';
+    playlistReady = true;
+    nextBtn.disabled = false;
+    statusNote.textContent = 'Selections saved. Tap Saved again to continue.';
+    statusNote.classList.add('visible');
+  });
+
+  track.addEventListener('mousedown', function(event) {
+    event.preventDefault();
+    startDrag(normalizePointerX(event.clientX));
+  });
+
+  window.addEventListener('mousemove', function(event) {
+    moveDrag(normalizePointerX(event.clientX));
+  });
+
+  window.addEventListener('mouseup', endDrag);
+
+  track.addEventListener('touchstart', function(event) {
+    startDrag(normalizePointerX(event.touches[0].clientX));
+  }, { passive: true });
+
+  window.addEventListener('touchmove', function(event) {
+    moveDrag(normalizePointerX(event.touches[0].clientX));
+  }, { passive: true });
+
+  window.addEventListener('touchend', endDrag);
+
+  track.addEventListener('transitionend', wrapTrack);
+  window.addEventListener('pagehide', function() { stopOptionAudio(true); });
+
+  preloadImages();
+  preloadAudio();
+  buildQuestion(0);
+
+  window.p1GetQuestionIndex = function() { return questionIndex; };
+  window.p1GoToPrevQuestion = function() {
+    if (questionIndex > 0) {
+      answers[questionIndex] = optionIndexFromCurrent();
+      saveAnswers();
+      transitionToQuestion(questionIndex - 1, 'backward');
+    }
+  };
+  window.p1OnPageEnter = function() {
+    page1Active = true;
+    playCurrentOptionAudio(true);
+  };
+  window.p1OnPageLeave = function() {
+    page1Active = false;
+    stopOptionAudio(true);
+  };
+})();
+
+/* ═══════════════════════════════════════════
+   PAGE 2: SONG PICKER
+   ═══════════════════════════════════════════ */
+(function() {
+  var STORAGE_KEY = 'funeral-playlist-song-picks';
+  var MAX_SONGS = 10;
+
+  var songs = [
+    { id: 'song-13', name: 'See You Again', artist: 'Wiz Khalifa', image: '图片库/13.jpg' },
+    { id: 'song-14', name: 'Hurt', artist: 'Johnny Cash', image: '图片库/14.jpg' },
+    { id: 'song-15', name: 'Hallelujah', artist: 'Leonard Cohen', image: '图片库/15.jpg' },
+    { id: 'song-16', name: 'My Way', artist: 'Frank Sinatra', image: '图片库/16.jpg' },
+    { id: 'song-17', name: 'Tears in Heaven', artist: 'Eric Clapton', image: '图片库/17.jpg' },
+    { id: 'song-18', name: 'Fix You', artist: 'Coldplay', image: '图片库/18.jpg' },
+    { id: 'song-19', name: 'Bohemian Rhapsody', artist: 'Queen', image: '图片库/19.jpg' },
+    { id: 'song-20', name: 'Imagine', artist: 'John Lennon', image: '图片库/20.jpg' },
+    { id: 'song-21', name: "Knockin' On Heaven's Door", artist: 'Bob Dylan', image: '图片库/21.jpg' },
+    { id: 'song-22', name: 'Over the Rainbow', artist: 'Israel K.', image: '图片库/22.jpg' },
+    { id: 'song-23', name: 'Spirit In the Sky', artist: 'Norman Greenbaum', image: '图片库/23.jpg' },
+    { id: 'song-24', name: 'The Sound of Silence', artist: 'Simon & Garfunkel', image: '图片库/24.jpg' },
+    { id: 'song-25', name: 'Nothing Else Matters', artist: 'Metallica', image: '图片库/25.jpg' },
+    { id: 'song-26', name: 'Time to Say Goodbye', artist: 'Bocelli & Brightman', image: '图片库/26.jpg' },
+    { id: 'song-27', name: 'Yesterday', artist: 'The Beatles', image: '图片库/27.jpg' },
+    { id: 'song-28', name: 'Angels', artist: 'Robbie Williams', image: '图片库/28.jpg' },
+    { id: 'song-29', name: 'Bridge Over Troubled Water', artist: 'Simon & Garfunkel', image: '图片库/29.jpg' },
+    { id: 'song-30', name: 'Stairway to Heaven', artist: 'Led Zeppelin', image: '图片库/30.jpg' },
+    { id: 'song-31', name: 'Wish You Were Here', artist: 'Pink Floyd', image: '图片库/31.jpg' },
+    { id: 'song-32', name: 'Unforgettable', artist: 'Nat King Cole', image: '图片库/32.jpg' },
+    { id: 'song-33', name: 'Dancing in the Sky', artist: 'Dani and Lizzy', image: '图片库/33.jpg' },
+    { id: 'song-34', name: 'Supermarket Flowers', artist: 'Ed Sheeran', image: '图片库/34.jpg' },
+    { id: 'song-35', name: 'Go Rest High', artist: 'Vince Gill', image: '图片库/35.jpg' },
+    { id: 'song-36', name: 'Amazing Grace', artist: 'Judy Collins', image: '图片库/36.jpg' },
+    { id: 'song-37', name: 'Candle In the Wind', artist: 'Elton John', image: '图片库/37.jpg' },
+    { id: 'song-38', name: 'What a Wonderful World', artist: 'Louis Armstrong', image: '图片库/38.jpg' },
+    { id: 'song-39', name: 'I Will Always Love You', artist: 'Whitney Houston', image: '图片库/39.jpg' },
+    { id: 'song-40', name: 'Lean On Me', artist: 'Bill Withers', image: '图片库/40.jpg' },
+    { id: 'song-41', name: 'One More Light', artist: 'Linkin Park', image: '图片库/41.jpg' },
+    { id: 'song-42', name: 'Ave Maria', artist: 'Schubert', image: '图片库/42.jpg' }
+  ];
+
+  var searchInput = document.getElementById('p2-search-input');
+  var songGrid = document.getElementById('p2-song-grid');
+  var capsuleArea = document.getElementById('p2-capsule-area');
+  var confirmBtn = document.getElementById('p2-confirm-btn');
+
+  var selectedSongIds = [];
+
+  function loadSelections() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) { selectedSongIds = [songs[0].id]; return; }
+      var parsed = JSON.parse(raw);
+      if (Array.isArray(parsed.selectedSongIds)) {
+        selectedSongIds = parsed.selectedSongIds.filter(function(id) { return songs.some(function(song) { return song.id === id; }); });
+      } else if (Array.isArray(parsed.selectedSongs)) {
+        selectedSongIds = parsed.selectedSongs
+          .map(function(savedSong) { return songs.find(function(song) { return song.name === savedSong.name && song.artist === savedSong.artist; }); })
+          .filter(Boolean)
+          .map(function(song) { return song.id; });
+      }
+    } catch (error) {
+      selectedSongIds = [songs[0].id];
+    }
+  }
+
+  function saveSelections() {
+    var selectedSongs = selectedSongIds
+      .map(function(id) { return songs.find(function(song) { return song.id === id; }); })
+      .filter(Boolean)
+      .map(function(song) { return { id: song.id, name: song.name, artist: song.artist, image: song.image }; });
+
+    var payload = {
+      selectedSongIds: selectedSongIds.slice(),
+      selectedSongs: selectedSongs,
+      updatedAt: new Date().toISOString()
+    };
+
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  }
+
+  function getFilteredSongs() {
+    var keyword = searchInput.value.trim().toLowerCase();
+    if (!keyword) return songs;
+    return songs.filter(function(song) {
+      return song.name.toLowerCase().indexOf(keyword) !== -1 || song.artist.toLowerCase().indexOf(keyword) !== -1;
+    });
+  }
+
+  function renderCapsules() {
+    capsuleArea.innerHTML = '';
+    selectedSongIds.forEach(function(id) {
+      var song = songs.find(function(item) { return item.id === id; });
+      if (!song) return;
+
+      var capsule = document.createElement('div');
+      capsule.className = 'capsule';
+      capsule.innerHTML =
+        '<span class="capsule-text">' + song.name + '</span>' +
+        '<button class="capsule-close" type="button" aria-label="Remove ' + song.name + '">&times;</button>';
+
+      capsule.querySelector('.capsule-close').addEventListener('click', function(event) {
+        event.stopPropagation();
+        toggleSong(song.id);
+      });
+
+      capsuleArea.appendChild(capsule);
+    });
+  }
+
+  function renderSongs() {
+    songGrid.innerHTML = '';
+    getFilteredSongs().forEach(function(song) {
+      var item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'song-item' + (selectedSongIds.indexOf(song.id) !== -1 ? ' selected' : '');
+      item.innerHTML =
+        '<div class="cover">' +
+          '<img src="' + song.image + '" alt="' + song.name + '">' +
+          '<div class="selected-overlay">' +
+            '<div class="check-icon">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="#1e2231" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<polyline points="20 6 9 17 4 12"></polyline>' +
+              '</svg>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="song-name">' + song.name + '</div>' +
+        '<div class="song-artist">' + song.artist + '</div>';
+      item.addEventListener('click', function() { toggleSong(song.id); });
+      songGrid.appendChild(item);
+    });
+  }
+
+  function toggleSong(songId) {
+    var existingIndex = selectedSongIds.indexOf(songId);
+    if (existingIndex >= 0) {
+      selectedSongIds.splice(existingIndex, 1);
+    } else {
+      if (selectedSongIds.length >= MAX_SONGS) return;
+      selectedSongIds.push(songId);
+    }
+    renderCapsules();
+    renderSongs();
+  }
+
+  searchInput.addEventListener('input', renderSongs);
+
+  confirmBtn.addEventListener('click', function() {
+    saveSelections();
+    goToPage(3);
+  });
+
+  loadSelections();
+  renderCapsules();
+  renderSongs();
+})();
+
+/* ═══════════════════════════════════════════
+   PAGE 3: GENERATE BUTTON
+   ═══════════════════════════════════════════ */
+(function() {
+  var generateBtn = document.getElementById('p3-generate-btn');
+  var statusNote = document.getElementById('p3-status-note');
+
+  function setStatus(message, isError) {
+    statusNote.textContent = message;
+    statusNote.classList.toggle('error', Boolean(isError));
+  }
+
+  function handleGenerate() {
+    generateBtn.classList.add('loading');
+    setStatus('', false);
+    goToPage(4);
+    if (page4StartLoading) page4StartLoading();
+  }
+
+  generateBtn.addEventListener('click', handleGenerate);
+})();
+
+/* ═══════════════════════════════════════════
+   PAGE 4: LOADING WITH AI API
+   ═══════════════════════════════════════════ */
+(function() {
+  var QUESTION_STORAGE_KEY = 'funeral-playlist-answers';
+  var AI_SCENE_STORAGE_KEY = 'funeral-playlist-ai-scene';
+  var API_PROXY_URL = '/api/generate';
+  var FIXED_PROMPT_PREFIX = 'Personalized funeral scenes, cinematic atmosphere, realistic style, dramatic lighting effects, and a meticulous and rigorous recreation of the scene elements given below (such as atmosphere, exhibits, weather, and people). The earlier descriptions are more important. Do not be bound by traditional funeral scenes. 1:1 aspect ratio and 2K resolution.';
+  var PROMPT_FRAGMENTS = [
+    [
+      'sandy beach at low tide, flower petals scattered on wet sand, warm golden dusk light, soft waves washing the shore',
+      'pale moonlight casting silver blue light, dark night atmosphere, soft dancing shadows on the ground, deep indigo sky, cinematic night scene',
+      'bright oceanside setting, pastel colors, big fancy cake, sunlit waves, light and celebratory coastal atmosphere, white tablecloth fluttering in sea breeze',
+      'A vibrant and hot party atmosphere, DJ, disco balls, neon lights, people raising their hands and jumping.',
+      'Thousands of shimmering fireflies illuminate the dark forest, in the center of the scene, two people embrace, while others dance around them. Soft green and gold lights float in the air.'
+    ],
+    [
+      'serene and peaceful mood, soft white diffused light, gentle breeze through open windows, calm acceptance, muted warm tones',
+      'melancholic cool blue tones, empty chair with a single flower, lingering morning mist, bittersweet longing atmosphere, soft shadows',
+      'open winding road stretching to the horizon, warm headlights in soft dusk, sense of forward movement and continuation, open sky ahead',
+      'golden rays of light breaking through clouds, luminous pathway disappearing into warm light, hopeful and uplifting warm amber tones',
+      'warm golden intimate gathering, embracing silhouettes surrounded by soft candlelight, tender and loving atmosphere, close figures in gentle light'
+    ],
+    [
+      'softly glowing candles surrounding old photographs, warm memory-like atmosphere, gentle bokeh of flickering lights, nostalgic amber tones',
+      'A calm, silent atmosphere, gray-blue lighting, A peaceful sense of relief, a feeling of letting go, On the edge of a hazy, dreamlike state'
+    ],
+    [
+      'Dust particles under sunlight or lamplight fly in the wind',
+      'infinite starry night sky, milky way galaxy stretching overhead',
+      'The river was frozen over, and the water flowed slowly beneath the ice.',
+      'sprawling spring wildflower meadow, rolling countryside hills',
+      'warm amber light glowing from a cottage window, familiar winding path leading home',
+      'deep ocean merging seamlessly with outer space, stars visible through deep blue water, surreal dreamlike and vast'
+    ],
+    [
+      'The mother\'s figure appeared in the center of the picture.',
+      'An image of a lover holding a bouquet of roses and hiding behind their back appears in the center of the picture.',
+      'Several young men and women were drinking and chatting in prominent positions at the funeral.',
+      'A young man\'s digital avatar appeared in the center of the funeral.'
+    ]
+  ];
+
+  var images = [
+    '图片库/13.jpg', '图片库/14.jpg', '图片库/15.jpg', '图片库/16.jpg',
+    '图片库/17.jpg', '图片库/18.jpg', '图片库/19.jpg', '图片库/20.jpg',
+    '图片库/21.jpg', '图片库/22.jpg', '图片库/23.jpg', '图片库/24.jpg',
+    '图片库/25.jpg', '图片库/26.jpg', '图片库/27.jpg', '图片库/28.jpg',
+    '图片库/29.jpg', '图片库/30.jpg', '图片库/31.jpg', '图片库/32.jpg',
+    '图片库/33.jpg', '图片库/34.jpg', '图片库/35.jpg', '图片库/36.jpg',
+    '图片库/37.jpg', '图片库/38.jpg', '图片库/39.jpg', '图片库/40.jpg',
+    '图片库/41.jpg', '图片库/42.jpg',
+    '图片库/问题1-1.jpg', '图片库/问题1-2.png', '图片库/问题1-3.jpg',
+    '图片库/问题1-4.jpg', '图片库/问题1-5.jpg',
+    '图片库/问题2-1.webp', '图片库/问题2-2.jpg', '图片库/问题2-3.webp',
+    '图片库/问题2-4.jpg', '图片库/问题2-5.jpg',
+    '图片库/问题3-1.jpg', '图片库/问题3-2.jpg',
+    '图片库/问题4-1.jpg', '图片库/问题4-2.jpg', '图片库/问题4-3.jpeg',
+    '图片库/问题4-4.png', '图片库/问题4-5.jpg', '图片库/问题4-6.jpg',
+    '图片库/问题5-1.png', '图片库/问题5-2.png', '图片库/问题5-3.png', '图片库/问题5-4.jpeg'
+  ];
+
+  var carousel = document.getElementById('p4-carousel');
+  var loadingText = document.getElementById('p4-loading-text');
+  var N = images.length;
+  var RADIUS = 240;
+  var hasStartedGeneration = false;
+  var loadingBaseText = 'loading';
+  var loadingDotCount = 3;
+  var dotIntervalId = null;
+
+  images.forEach(function(src, i) {
+    var angleDeg = (i / N) * 360;
+    var pivot = document.createElement('div');
+    pivot.style.cssText =
+      'position:absolute;width:0;height:0;transform-style:preserve-3d;' +
+      'transform:rotateY(' + angleDeg + 'deg) translateZ(' + RADIUS + 'px);';
+    var el = document.createElement('div');
+    el.className = 'album';
+    el.style.transform = 'rotateY(90deg)';
+    el.innerHTML = '<img src="' + src + '" alt="">';
+    pivot.appendChild(el);
+    carousel.appendChild(pivot);
+  });
+
+  function safeParse(key) {
+    try {
+      var raw = window.localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function renderLoadingText() {
+    var dots = '';
+    for (var i = 0; i < loadingDotCount; i++) dots += '.';
+    loadingText.textContent = loadingBaseText + dots;
+  }
+
+  function setLoadingState(mainText) {
+    loadingBaseText = mainText.replace(/\.+$/, '') || 'loading';
+    renderLoadingText();
+  }
+
+  function buildAnswerSignature(answers) {
+    return answers.map(function(answer) {
+      if (!answer || typeof answer.selectedIndex !== 'number') return 'x';
+      return String(answer.selectedIndex);
+    }).join('-');
+  }
+
+  function buildPromptPayload() {
+    var saved = safeParse(QUESTION_STORAGE_KEY);
+    var answers = saved && Array.isArray(saved.answers) ? saved.answers : [];
+
+    if (!answers.length) {
+      throw new Error('Please finish the questionnaire before generating.');
+    }
+
+    var promptFragments = PROMPT_FRAGMENTS.map(function(fragments, questionIdx) {
+      var answer = answers[questionIdx];
+      var selectedIndex = answer && typeof answer.selectedIndex === 'number' ? answer.selectedIndex : -1;
+      var fragment = fragments[selectedIndex];
+      if (!fragment) {
+        throw new Error('One or more question selections are missing. Please complete all five questions first.');
+      }
+      return fragment;
+    });
+
+    return {
+      prompt: [FIXED_PROMPT_PREFIX].concat(promptFragments).join(', '),
+      promptFragments: promptFragments,
+      signature: buildAnswerSignature(answers)
+    };
+  }
+
+  function saveSceneState(payload) {
+    payload.updatedAt = new Date().toISOString();
+    window.localStorage.setItem(AI_SCENE_STORAGE_KEY, JSON.stringify(payload));
+  }
+
+  function requestGeneratedScene(prompt) {
+    return fetch(API_PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: prompt })
+    }).then(function(response) {
+      var ok = response.ok;
+      var status = response.status;
+      return response.json().catch(function() { return null; }).then(function(payload) {
+        if (!ok) {
+          var errorMessage = payload && (payload.error || payload.message);
+          throw new Error(errorMessage || 'Generation failed with status ' + status + '.');
+        }
+        if (!payload || !payload.imageUrl) {
+          throw new Error('The AI service returned no image URL.');
+        }
+        return {
+          imageUrl: payload.imageUrl,
+          timings: payload.timings || null,
+          seed: typeof payload.seed === 'number' ? payload.seed : null
+        };
+      });
+    });
+  }
+
+  function runGeneration() {
+    if (hasStartedGeneration) return;
+    hasStartedGeneration = true;
+    setLoadingState('loading...');
+
+    if (dotIntervalId) clearInterval(dotIntervalId);
+    dotIntervalId = setInterval(function() {
+      loadingDotCount = (loadingDotCount % 3) + 1;
+      renderLoadingText();
+    }, 420);
+
+    var promptPayload;
+    try {
+      promptPayload = buildPromptPayload();
+    } catch (error) {
+      setLoadingState('loading...');
+      hasStartedGeneration = false;
+      return;
+    }
+
+    saveSceneState({
+      status: 'loading',
+      prompt: promptPayload.prompt,
+      promptFragments: promptPayload.promptFragments,
+      signature: promptPayload.signature,
+      model: SILICONFLOW_MODEL,
+      imageSize: SILICONFLOW_IMAGE_SIZE
+    });
+
+    requestGeneratedScene(promptPayload.prompt).then(function(imageResult) {
+      saveSceneState({
+        status: 'ready',
+        prompt: promptPayload.prompt,
+        promptFragments: promptPayload.promptFragments,
+        signature: promptPayload.signature,
+        model: SILICONFLOW_MODEL,
+        imageSize: SILICONFLOW_IMAGE_SIZE,
+        imageUrl: imageResult.imageUrl,
+        timings: imageResult.timings,
+        seed: imageResult.seed
+      });
+
+      if (dotIntervalId) { clearInterval(dotIntervalId); dotIntervalId = null; }
+      goToPage(5);
+      if (page5InitSummary) page5InitSummary();
+    }).catch(function(error) {
+      var fallbackPayload;
+      try { fallbackPayload = buildPromptPayload(); } catch (e) { fallbackPayload = null; }
+
+      saveSceneState({
+        status: 'error',
+        prompt: fallbackPayload ? fallbackPayload.prompt : '',
+        promptFragments: fallbackPayload ? fallbackPayload.promptFragments : [],
+        signature: fallbackPayload ? fallbackPayload.signature : '',
+        model: SILICONFLOW_MODEL,
+        imageSize: SILICONFLOW_IMAGE_SIZE,
+        errorMessage: error instanceof Error ? error.message : 'Failed to generate the AI scene.'
+      });
+
+      setLoadingState('loading...');
+      hasStartedGeneration = false;
+    });
+  }
+
+  page4StartLoading = function() {
+    hasStartedGeneration = false;
+    runGeneration();
+  };
+})();
+
+/* ═══════════════════════════════════════════
+   PAGE 5: SUMMARY WITH SCREENSHOT
+   ═══════════════════════════════════════════ */
+(function() {
+  var QUESTION_STORAGE_KEY = 'funeral-playlist-answers';
+  var SONG_STORAGE_KEY = 'funeral-playlist-song-picks';
+  var USER_ID_KEY = 'funeral-playlist-user-id';
+  var AI_SCENE_STORAGE_KEY = 'funeral-playlist-ai-scene';
+
+  var songCatalog = [
+    { id: 'song-1', name: 'Tides', artist: 'Ed Sheeran', image: '图片库/1.png' },
+    { id: 'song-2', name: 'A dream', artist: 'Adele', image: '图片库/2.png' },
+    { id: 'song-3', name: 'Aari Aari', artist: 'Dhizandhar', image: '图片库/3.png' },
+    { id: 'song-4', name: 'Sheeran', artist: 'Ed Sheeran', image: '图片库/4.png' },
+    { id: 'song-5', name: 'Folklore', artist: 'Taylor Swift', image: '图片库/5.png' },
+    { id: 'song-6', name: 'Red', artist: 'Taylor Swift', image: '图片库/6.png' },
+    { id: 'song-7', name: 'Mega Hit Mix', artist: 'Various', image: '图片库/7.png' },
+    { id: 'song-8', name: 'The life of a showgirl', artist: 'Kylie', image: '图片库/8.png' },
+    { id: 'song-9', name: 'Reputation', artist: 'Taylor Swift', image: '图片库/9.png' },
+    { id: 'song-10', name: 'Ignite', artist: 'Alan Walker', image: '图片库/10.png' },
+    { id: 'song-11', name: 'Starboy', artist: 'The Weeknd', image: '图片库/11.png' },
+    { id: 'song-12', name: 'Blinding Lights', artist: 'The Weeknd', image: '图片库/12.png' }
+  ];
+
+  var posterDisplay = document.getElementById('p5-poster-display');
+  var userIdEl = document.getElementById('p5-user-id');
+  var keywordsEl = document.getElementById('p5-keywords');
+  var trackListEl = document.getElementById('p5-track-list');
+  var downloadBtn = document.getElementById('p5-download-btn');
+  var saveShareBtn = document.getElementById('p5-save-share-btn');
+
+  function safeParse(key) {
+    try {
+      var raw = window.localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function resolveSongs() {
+    var saved = safeParse(SONG_STORAGE_KEY);
+    if (saved && Array.isArray(saved.selectedSongs) && saved.selectedSongs.length) {
+      return saved.selectedSongs.map(function(song) {
+        var matched = songCatalog.find(function(item) { return item.id === song.id; }) || {};
+        return {
+          id: song.id,
+          name: song.name || matched.name || 'Track',
+          artist: song.artist || matched.artist || 'Singer',
+          image: song.image || matched.image || ''
+        };
+      });
+    }
+
+    if (saved && Array.isArray(saved.selectedSongIds) && saved.selectedSongIds.length) {
+      return saved.selectedSongIds.map(function(id) { return songCatalog.find(function(song) { return song.id === id; }); }).filter(Boolean);
+    }
+
+    return [];
+  }
+
+  function resolveKeywords() {
+    var saved = safeParse(QUESTION_STORAGE_KEY);
+    if (!saved || !Array.isArray(saved.answers)) return [];
+
+    return saved.answers
+      .filter(Boolean)
+      .map(function(answer) { return answer.selectedKeyword || answer.selectedTitle || ''; })
+      .map(function(text) { return text.toString().trim(); })
+      .filter(Boolean)
+      .slice(0, 5);
+  }
+
+  function resolveAnswerSignature() {
+    var saved = safeParse(QUESTION_STORAGE_KEY);
+    if (!saved || !Array.isArray(saved.answers)) return '';
+
+    return saved.answers.map(function(answer) {
+      if (!answer || typeof answer.selectedIndex !== 'number') return 'x';
+      return String(answer.selectedIndex);
+    }).join('-');
+  }
+
+  function resolveAiScene() {
+    var saved = safeParse(AI_SCENE_STORAGE_KEY);
+    if (!saved) return null;
+
+    var currentSignature = resolveAnswerSignature();
+    if (saved.signature && currentSignature && saved.signature !== currentSignature) return null;
+
+    return saved;
+  }
+
+  function buildUserId() {
+    var existing = window.localStorage.getItem(USER_ID_KEY);
+    if (existing) return existing;
+
+    var seed = Date.now().toString().slice(-6);
+    var id = 'User #' + seed;
+    window.localStorage.setItem(USER_ID_KEY, id);
+    return id;
+  }
+
+  function renderPoster(scene) {
+    posterDisplay.innerHTML = '';
+
+    if (!scene) {
+      posterDisplay.innerHTML = '<div class="poster-empty">Your AI funeral scene<br>will appear here.</div>';
+      return;
+    }
+
+    if (scene.status === 'loading') {
+      posterDisplay.innerHTML = '<div class="poster-empty">Generating your AI<br>funeral scene...</div>';
+      return;
+    }
+
+    if (scene.status === 'error') {
+      posterDisplay.innerHTML = '<div class="poster-empty">AI scene generation failed.<br>Please try again.</div>';
+      return;
+    }
+
+    if (scene.imageUrl) {
+      posterDisplay.innerHTML = '<img class="poster-image" src="' + scene.imageUrl + '" alt="Generated funeral scene">';
+      return;
+    }
+
+    posterDisplay.innerHTML = '<div class="poster-empty">Your AI funeral scene<br>will appear here.</div>';
+  }
+
+  function renderTracks(songs) {
+    trackListEl.innerHTML = '';
+
+    if (!songs.length) {
+      trackListEl.innerHTML =
+        '<div class="track-row">' +
+          '<div class="track-number">1</div>' +
+          '<div class="track-name">No tracks selected yet</div>' +
+          '<div class="track-artist">-</div>' +
+        '</div>';
+      return;
+    }
+
+    songs.forEach(function(song, index) {
+      var row = document.createElement('div');
+      row.className = 'track-row';
+      row.innerHTML =
+        '<div class="track-number">' + (index + 1) + '</div>' +
+        '<div class="track-name">' + song.name + '</div>' +
+        '<div class="track-artist">' + song.artist + '</div>';
+      trackListEl.appendChild(row);
+    });
+  }
+
+  function convertImagesToDataURL() {
+    var posterImg = document.querySelector('#page5 .poster-image');
+    if (!posterImg || !posterImg.src || posterImg.src.startsWith('data:')) return Promise.resolve(null);
+
+    var originalSrc = posterImg.src;
+    return fetch(posterImg.src).then(function(resp) {
+      return resp.blob();
+    }).then(function(blob) {
+      return new Promise(function(resolve) {
+        var reader = new FileReader();
+        reader.onloadend = function() { resolve(reader.result); };
+        reader.readAsDataURL(blob);
+      });
+    }).then(function(dataUrl) {
+      posterImg.src = dataUrl;
+      return { el: posterImg, originalSrc: originalSrc };
+    }).catch(function() {
+      return null;
+    });
+  }
+
+  function captureFullPage() {
+    return convertImagesToDataURL().then(function(imgBackup) {
+      var body = document.body;
+      var html = document.documentElement;
+      var wrapper = document.querySelector('.pages-wrapper');
+      var pageEl = document.getElementById('page5');
+      var pageInner = pageEl.querySelector('.page-inner');
+      var tracksArea = document.getElementById('p5-tracks-area');
+      var saveShareArea = pageEl.querySelector('.save-share-area');
+      var downloadBtnEl = document.getElementById('p5-download-btn');
+
+      // Hide other pages
+      var otherPageIds = ['page0', 'page1', 'page2', 'page3', 'page4'];
+      var otherPages = otherPageIds.map(function(id) {
+        var el = document.getElementById(id);
+        if (el) { var d = el.style.display; el.style.display = 'none'; return { el: el, display: d }; }
+        return null;
+      }).filter(Boolean);
+
+      // Save all styles we'll touch
+      var saved = {
+        htmlOverflow: html.style.overflow,
+        bodyPosition: body.style.position,
+        bodyTransform: body.style.transform,
+        bodyTransformOrigin: body.style.transformOrigin,
+        bodyLeft: body.style.left,
+        bodyTop: body.style.top,
+        bodyWidth: body.style.width,
+        bodyHeight: body.style.height,
+        bodyOverflow: body.style.overflow,
+        wrapperHeight: wrapper.style.height,
+        wrapperOverflow: wrapper.style.overflow,
+        pagePosition: pageEl.style.position,
+        pageHeight: pageEl.style.height,
+        pageOverflow: pageEl.style.overflow,
+        pageInnerHeight: pageInner.style.height,
+        pageInnerOverflow: pageInner.style.overflow,
+        tracksBottom: tracksArea.style.bottom,
+        tracksOverflow: tracksArea.style.overflowY,
+        shareDisplay: saveShareArea.style.display,
+        downloadDisplay: downloadBtnEl.style.display
+      };
+
+      // Hide buttons
+      saveShareArea.style.display = 'none';
+      downloadBtnEl.style.display = 'none';
+
+      // Expand tracks to full height
+      tracksArea.style.bottom = 'auto';
+      tracksArea.style.overflowY = 'visible';
+      pageInner.style.height = 'auto';
+      pageInner.style.overflow = 'visible';
+
+      var fullHeight = Math.max(874, tracksArea.offsetTop + tracksArea.scrollHeight + 40);
+
+      // Flatten layout: remove body transform, make page5 fill naturally
+      html.style.overflow = 'visible';
+      body.style.position = 'static';
+      body.style.transform = 'none';
+      body.style.transformOrigin = '0 0';
+      body.style.left = '0';
+      body.style.top = '0';
+      body.style.width = '402px';
+      body.style.height = fullHeight + 'px';
+      body.style.overflow = 'visible';
+      wrapper.style.height = fullHeight + 'px';
+      wrapper.style.overflow = 'visible';
+      pageEl.style.position = 'relative';
+      pageEl.style.height = fullHeight + 'px';
+      pageEl.style.overflow = 'visible';
+
+      function restore() {
+        html.style.overflow = saved.htmlOverflow;
+        body.style.position = saved.bodyPosition;
+        body.style.transform = saved.bodyTransform;
+        body.style.transformOrigin = saved.bodyTransformOrigin;
+        body.style.left = saved.bodyLeft;
+        body.style.top = saved.bodyTop;
+        body.style.width = saved.bodyWidth;
+        body.style.height = saved.bodyHeight;
+        body.style.overflow = saved.bodyOverflow;
+        wrapper.style.height = saved.wrapperHeight;
+        wrapper.style.overflow = saved.wrapperOverflow;
+        pageEl.style.position = saved.pagePosition;
+        pageEl.style.height = saved.pageHeight;
+        pageEl.style.overflow = saved.pageOverflow;
+        pageInner.style.height = saved.pageInnerHeight;
+        pageInner.style.overflow = saved.pageInnerOverflow;
+        tracksArea.style.bottom = saved.tracksBottom;
+        tracksArea.style.overflowY = saved.tracksOverflow;
+        saveShareArea.style.display = saved.shareDisplay;
+        downloadBtnEl.style.display = saved.downloadDisplay;
+        otherPages.forEach(function(p) { p.el.style.display = p.display; });
+        if (imgBackup) imgBackup.el.src = imgBackup.originalSrc;
+      }
+
+      return html2canvas(pageEl, {
+        width: 402,
+        height: fullHeight,
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#060d15',
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: 402,
+        windowHeight: fullHeight
+      }).then(function(canvas) {
+        restore();
+        return canvas;
+      }).catch(function(err) {
+        restore();
+        throw err;
+      });
+    });
+  }
+
+  /* download-btn: save only the AI poster image */
+  function downloadPosterImage() {
+    var posterImg = document.querySelector('#page5 .poster-image');
+    if (!posterImg || !posterImg.src) return;
+    fetch(posterImg.src).then(function(resp) { return resp.blob(); }).then(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'my-funeral-poster.png';
+      link.click();
+      setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    }).catch(function(err) {
+      console.error('Poster download failed:', err);
+    });
+  }
+
+  /* save-share-btn: capture full page screenshot, auto-save + share */
+  function saveAndShareScreenshot() {
+    captureFullPage().then(function(canvas) {
+      return new Promise(function(resolve) { canvas.toBlob(resolve, 'image/png'); });
+    }).then(function(blob) {
+      if (!blob) return;
+      /* auto-save via download */
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'my-funeral-playlist.png';
+      link.click();
+
+      /* share if supported */
+      if (navigator.share) {
+        var file = new File([blob], 'my-funeral-playlist.png', { type: 'image/png' });
+        navigator.share({ title: 'My Funeral Playlist', files: [file] }).catch(function() {});
+      }
+      setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    }).catch(function(error) {
+      console.error('Screenshot failed:', error);
+    });
+  }
+
+  downloadBtn.addEventListener('click', downloadPosterImage);
+
+  saveShareBtn.addEventListener('click', saveAndShareScreenshot);
+
+  function initSummary() {
+    var songs = resolveSongs();
+    var keywords = resolveKeywords();
+    var scene = resolveAiScene();
+
+    renderPoster(scene);
+    renderTracks(songs);
+    userIdEl.textContent = buildUserId();
+    keywordsEl.textContent = keywords.length ? keywords.join('  |  ') : 'keyword pending';
+  }
+
+  page5InitSummary = initSummary;
+})();
+</script>
+</body>
+</html>
