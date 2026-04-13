@@ -2622,8 +2622,8 @@ function goBackToPage0() {
       prompt: promptPayload.prompt,
       promptFragments: promptPayload.promptFragments,
       signature: promptPayload.signature,
-      model: SILICONFLOW_MODEL,
-      imageSize: SILICONFLOW_IMAGE_SIZE
+      model: 'Qwen/Qwen-Image',
+      imageSize: '1024x1024'
     });
 
     requestGeneratedScene(promptPayload.prompt).then(function(imageResult) {
@@ -2632,8 +2632,8 @@ function goBackToPage0() {
         prompt: promptPayload.prompt,
         promptFragments: promptPayload.promptFragments,
         signature: promptPayload.signature,
-        model: SILICONFLOW_MODEL,
-        imageSize: SILICONFLOW_IMAGE_SIZE,
+        model: 'Qwen/Qwen-Image',
+        imageSize: '1024x1024',
         imageUrl: imageResult.imageUrl,
         timings: imageResult.timings,
         seed: imageResult.seed
@@ -2651,8 +2651,8 @@ function goBackToPage0() {
         prompt: fallbackPayload ? fallbackPayload.prompt : '',
         promptFragments: fallbackPayload ? fallbackPayload.promptFragments : [],
         signature: fallbackPayload ? fallbackPayload.signature : '',
-        model: SILICONFLOW_MODEL,
-        imageSize: SILICONFLOW_IMAGE_SIZE,
+        model: 'Qwen/Qwen-Image',
+        imageSize: '1024x1024',
         errorMessage: error instanceof Error ? error.message : 'Failed to generate the AI scene.'
       });
 

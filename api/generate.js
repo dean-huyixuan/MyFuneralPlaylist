@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: 'Qwen/Qwen-Image',
         prompt: prompt,
-        image_size: '1328x1328',
+        image_size: '1024x1024',
         num_inference_steps: 50,
         cfg: 4
       })
